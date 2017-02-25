@@ -260,3 +260,7 @@ Temporary Items
 /packages/jQuery.Validation.1.11.1/Content/Scripts/jquery.validate.js
 /packages/jQuery.Validation.1.11.1/Content/Scripts/jquery.validate.min.js
 /packages/jQuery.Validation.1.11.1/jQuery.Validation.1.11.1.nupkg
+/packages/Enexure.MicroBus.3.5.0/Enexure.MicroBus.3.5.0.nupkg
+/packages/Enexure.MicroBus.Autofac.3.5.1/Enexure.MicroBus.Autofac.3.5.1.nupkg
+/packages/Enexure.MicroBus.InfrastructureContracts.3.5.0/Enexure.MicroBus.InfrastructureContracts.3.5.0.nupkg
+/packages/Enexure.MicroBus.MessageContracts.3.1.0/Enexure.MicroBus.MessageContracts.3.1.0.nupkg

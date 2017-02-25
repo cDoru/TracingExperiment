@@ -9,6 +9,7 @@ using Autofac.Integration.WebApi;
 using TracingExperiment.IOC;
 using TracingExperiment.IOC.Interfaces;
 using TracingExperiment.Tracing;
+using TracingExperiment.Tracing.Bus;
 using TracingExperiment.Tracing.Handlers;
 using TracingExperiment.Tracing.Interfaces;
 
@@ -29,6 +30,9 @@ namespace TracingExperiment.App_Start
             var assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>().ToArray();
             RegisterModules(builder, assemblies);
             AutowireProperties(builder);
+
+            builder.RegisterModule(new BusDomainModule());
+
             Container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacResolver(Container));

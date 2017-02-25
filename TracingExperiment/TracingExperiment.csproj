@@ -47,6 +47,22 @@
       <HintPath>..\packages\Autofac.WebApi2.4.0.1\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Enexure.MicroBus, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enexure.MicroBus.3.5.0\lib\net451\Enexure.MicroBus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Enexure.MicroBus.Autofac, Version=3.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enexure.MicroBus.Autofac.3.5.1\lib\net451\Enexure.MicroBus.Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Enexure.MicroBus.InfrastructureContracts, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enexure.MicroBus.InfrastructureContracts.3.5.0\lib\net451\Enexure.MicroBus.InfrastructureContracts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Enexure.MicroBus.MessageContracts, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Enexure.MicroBus.MessageContracts.3.1.0\lib\net45\Enexure.MicroBus.MessageContracts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ProductionStackTrace, Version=1.0.16.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ProductionStackTrace.1.0.16\lib\net45\ProductionStackTrace.dll</HintPath>
@@ -242,6 +258,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Tracing\Bus\ApiEntryCommand.cs" />
+    <Compile Include="Tracing\Bus\ApiEntryHandler.cs" />
+    <Compile Include="Tracing\Bus\BusDomainModule.cs" />
     <Compile Include="Tracing\Handlers\ApiLogEntry.cs" />
     <Compile Include="Tracing\Handlers\ApiLogHandler.cs" />
     <Compile Include="Tracing\Interfaces\IHelper.cs" />
@@ -251,6 +270,7 @@
     <Compile Include="Tracing\SimpleTracer.cs" />
     <Compile Include="Tracing\TraceStep.cs" />
     <Compile Include="Tracing\TraceStepper.cs" />
+    <Compile Include="Tracing\Utils\AsyncHelper.cs" />
     <Compile Include="Tracing\Utils\StackTraceParser.cs" />
     <Compile Include="Tracing\Utils\TimingOutLock.cs" />
     <Compile Include="Tracing\WCF\TracingMessageBehavior.cs" />
@@ -342,6 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Tracing\Database\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

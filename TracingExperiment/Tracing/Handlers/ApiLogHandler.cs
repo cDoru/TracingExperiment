@@ -7,8 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Routing;
+using Enexure.MicroBus;
 using Newtonsoft.Json;
+using TracingExperiment.Tracing.Bus;
 using TracingExperiment.Tracing.Interfaces;
+using TracingExperiment.Tracing.Utils;
 
 namespace TracingExperiment.Tracing.Handlers
 {
@@ -16,11 +19,13 @@ namespace TracingExperiment.Tracing.Handlers
     {
         private readonly ITracer _tracer;
         private readonly ITraceStepper _traceStepper;
+        private readonly IMicroBus _bus;
 
-        public ApiLogHandler(ITracer tracer, ITraceStepper traceStepper)
+        public ApiLogHandler(ITracer tracer, ITraceStepper traceStepper, IMicroBus bus)
         {
             _tracer = tracer;
             _traceStepper = traceStepper;
+            _bus = bus;
         }
 
         private void ProcessRequest(Task<string> task, ApiLogEntry apiLogEntry )
@@ -31,7 +36,7 @@ namespace TracingExperiment.Tracing.Handlers
             _traceStepper.WriteOperation("Web API request", "body request", apiLogEntry.RequestContentBody);
         }
 
-        private HttpResponseMessage ProcessResponse(Task<HttpResponseMessage> task, ApiLogEntry apiLogEntry)
+        private async Task<HttpResponseMessage> ProcessResponse(Task<HttpResponseMessage> task, ApiLogEntry apiLogEntry)
         {
             var response = task.Result;
 
@@ -55,8 +60,12 @@ namespace TracingExperiment.Tracing.Handlers
 
             var represetnation = _tracer.ToStringRepresentation();
 
+            await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, represetnation));
+
             return response;
         }
+
+        
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
@@ -72,7 +81,7 @@ namespace TracingExperiment.Tracing.Handlers
                     }, cancellationToken);
             }
 
-            return await base.SendAsync(request, cancellationToken).ContinueWith(task => ProcessResponse(task, apiLogEntry), cancellationToken);
+            return await base.SendAsync(request, cancellationToken).ContinueWith(task => AsyncHelper.RunSync(() => ProcessResponse(task, apiLogEntry)), cancellationToken);
         }
 
         private ApiLogEntry CreateApiLogEntryWithRequestData(HttpRequestMessage request)
