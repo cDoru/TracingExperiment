@@ -264,3 +264,4 @@ Temporary Items
 /packages/Enexure.MicroBus.Autofac.3.5.1/Enexure.MicroBus.Autofac.3.5.1.nupkg
 /packages/Enexure.MicroBus.InfrastructureContracts.3.5.0/Enexure.MicroBus.InfrastructureContracts.3.5.0.nupkg
 /packages/Enexure.MicroBus.MessageContracts.3.1.0/Enexure.MicroBus.MessageContracts.3.1.0.nupkg
+/TracingExperiment/obj/Debug/TracingExperiment.Tracing.Database.InitialMigration.resources

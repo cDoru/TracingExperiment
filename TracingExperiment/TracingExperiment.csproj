@@ -238,6 +238,8 @@
     <Compile Include="Exceptions\NoAutofacContainerFoundException.cs" />
     <Compile Include="Exceptions\NoDependencyInjectionSetupException.cs" />
     <Compile Include="Exceptions\ResolverException.cs" />
+    <Compile Include="Exceptions\TracingContextException.cs" />
+    <Compile Include="Exceptions\TracingContextUniqueConstraintFailureException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -246,6 +248,10 @@
     <Compile Include="IOC\Interfaces\IResolver.cs" />
     <Compile Include="IOC\Resolver.cs" />
     <Compile Include="Keys.cs" />
+    <Compile Include="Migrations\201702251737490_InitialMigration.cs" />
+    <Compile Include="Migrations\201702251737490_InitialMigration.Designer.cs">
+      <DependentUpon>201702251737490_InitialMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -261,6 +267,12 @@
     <Compile Include="Tracing\Bus\ApiEntryCommand.cs" />
     <Compile Include="Tracing\Bus\ApiEntryHandler.cs" />
     <Compile Include="Tracing\Bus\BusDomainModule.cs" />
+    <Compile Include="Tracing\Database\TracingConfiguration.cs" />
+    <Compile Include="Tracing\Database\Configurations\LogEntryConfiguration.cs" />
+    <Compile Include="Tracing\Database\Interfaces\IEntity.cs" />
+    <Compile Include="Tracing\Database\Interfaces\ITracingContext.cs" />
+    <Compile Include="Tracing\Database\LogEntry.cs" />
+    <Compile Include="Tracing\Database\TracingContext.cs" />
     <Compile Include="Tracing\Handlers\ApiLogEntry.cs" />
     <Compile Include="Tracing\Handlers\ApiLogHandler.cs" />
     <Compile Include="Tracing\Interfaces\IHelper.cs" />
@@ -282,6 +294,7 @@
     <Compile Include="Tracing\WCF\WcfLoggingModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\script.sql" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -361,10 +374,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Tracing\Database\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -376,6 +385,11 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\MathService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702251737490_InitialMigration.resx">
+      <DependentUpon>201702251737490_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

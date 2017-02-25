@@ -10,6 +10,8 @@ using TracingExperiment.IOC;
 using TracingExperiment.IOC.Interfaces;
 using TracingExperiment.Tracing;
 using TracingExperiment.Tracing.Bus;
+using TracingExperiment.Tracing.Database;
+using TracingExperiment.Tracing.Database.Interfaces;
 using TracingExperiment.Tracing.Handlers;
 using TracingExperiment.Tracing.Interfaces;
 
@@ -47,6 +49,8 @@ namespace TracingExperiment.App_Start
 
             builder.RegisterType<ApiLogHandler>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<Resolver>().As<IResolver>().SingleInstance();
+
+            builder.RegisterType<TracingContext>().As<ITracingContext>().InstancePerLifetimeScope();
         }
 
         private static void AutowireProperties(ContainerBuilder builder)
