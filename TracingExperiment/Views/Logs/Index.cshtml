@@ -1,0 +1,15 @@
+﻿@using TracingExperiment.Models
+@{
+    ViewBag.Title = "Logs HomePage";
+}
+
+<div class="jumbotron">
+    <p class="lead">See the logs</p>
+</div>
+
+@(Html.BootstrapTable<TraceViewModel>(Url.Action("GetTracesPaged"), TablePaginationOption.server)
+      .Apply(TableOption.showLoading, TableOption.showRefresh, TableOption.search, TableOption.sortOrder_desc, TableOption.striped, TableOption.showToggle)
+      .Apply(TableOption.sortName, "Timestamp")
+      .Apply(TableOption.pageSize, 100)
+      .Apply(m => m.Timestamp, ColumnOption.sortable)
+      .Apply(TableOption.buttonsAlign, "left"))

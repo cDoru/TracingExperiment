@@ -5,6 +5,7 @@ using System.Web.Compilation;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
+using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using TracingExperiment.IOC;
 using TracingExperiment.IOC.Interfaces;
@@ -34,7 +35,7 @@ namespace TracingExperiment.App_Start
             var assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>().ToArray();
             RegisterModules(builder, assemblies);
             AutowireProperties(builder);
-
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterModule(new BusDomainModule());
 
             Container = builder.Build();
