@@ -1,0 +1,6 @@
+@using TracingExperiment.Areas.HelpPage.ModelDescriptions
+@model TracingExperiment.Areas.HelpPage.ModelDescriptions.CollectionModelDescription
+@if (Model.ElementDescription is ComplexTypeModelDescription)
+{
+    @Html.DisplayFor(m => m.ElementDescription)
+}

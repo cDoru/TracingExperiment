@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TracingExperiment", "TracingExperiment\TracingExperiment.csproj", "{4E655A26-967E-4248-97B1-0E7C3432080C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{8236922A-F441-4BB7-98A8-BA62E1A51827}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfService", "WcfService\WcfService.csproj", "{0E15D11C-8271-4057-8C67-D9D416CAD36E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E655A26-967E-4248-97B1-0E7C3432080C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E655A26-967E-4248-97B1-0E7C3432080C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E655A26-967E-4248-97B1-0E7C3432080C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E655A26-967E-4248-97B1-0E7C3432080C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E15D11C-8271-4057-8C67-D9D416CAD36E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E15D11C-8271-4057-8C67-D9D416CAD36E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E15D11C-8271-4057-8C67-D9D416CAD36E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E15D11C-8271-4057-8C67-D9D416CAD36E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0E15D11C-8271-4057-8C67-D9D416CAD36E} = {8236922A-F441-4BB7-98A8-BA62E1A51827}
+	EndGlobalSection
+EndGlobal
