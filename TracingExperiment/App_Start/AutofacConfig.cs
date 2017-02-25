@@ -14,6 +14,8 @@ using TracingExperiment.Tracing.Database;
 using TracingExperiment.Tracing.Database.Interfaces;
 using TracingExperiment.Tracing.Handlers;
 using TracingExperiment.Tracing.Interfaces;
+using TracingExperiment.Tracing.Utils;
+using TracingExperiment.Tracing.Utils.Interfaces;
 
 namespace TracingExperiment.App_Start
 {
@@ -50,6 +52,7 @@ namespace TracingExperiment.App_Start
             builder.RegisterType<ApiLogHandler>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<Resolver>().As<IResolver>().SingleInstance();
 
+            builder.RegisterType<NowImplementation>().As<INow>().InstancePerLifetimeScope();
             builder.RegisterType<TracingContext>().As<ITracingContext>().InstancePerLifetimeScope();
         }
 

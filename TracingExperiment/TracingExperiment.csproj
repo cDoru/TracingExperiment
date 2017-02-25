@@ -283,6 +283,8 @@
     <Compile Include="Tracing\TraceStep.cs" />
     <Compile Include="Tracing\TraceStepper.cs" />
     <Compile Include="Tracing\Utils\AsyncHelper.cs" />
+    <Compile Include="Tracing\Utils\Interfaces\INow.cs" />
+    <Compile Include="Tracing\Utils\NowImplementation.cs" />
     <Compile Include="Tracing\Utils\StackTraceParser.cs" />
     <Compile Include="Tracing\Utils\TimingOutLock.cs" />
     <Compile Include="Tracing\WCF\TracingMessageBehavior.cs" />
