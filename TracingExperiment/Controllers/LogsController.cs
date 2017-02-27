@@ -89,18 +89,18 @@ namespace TracingExperiment.Controllers
                 var traceSteps = trace.Steps.OrderBy(x => x.Index);
 
                 StringBuilder builder = new StringBuilder();
-                builder.Append("Start request <br/><br/>");
+                builder.Append("<p style=\"white-space: nowrap;\">Start request </p>");
 
                 foreach (var tracestep in traceSteps)
                 {
-                    builder.Append(string.Format("From {0} method located in frame {1} {2} {3} <br/><br/>", tracestep.Source,
+                    builder.Append(string.Format("<p style=\"white-space: nowrap;\">{0}</p>", string.Format("From {0} method located in frame {1} {2} {3} \r\n", tracestep.Source,
                         tracestep.Frame,
-                        (tracestep.Name != null ? string.Format(" (which processes {0}) ", tracestep.Name) : ""),
-                        (tracestep.Message != null ? string.Format(" (with message {0}) ", tracestep.Message) : "")));
+                        (!string.IsNullOrEmpty(tracestep.Name) ? string.Format(" (which processes {0}) ", tracestep.Name) : ""),
+                        (!string.IsNullOrEmpty(tracestep.Message) ? string.Format(" (with message {0}) ", tracestep.Message) : ""))));
 
-                    if (tracestep.Metadata != null)
+                    if (!string.IsNullOrEmpty(tracestep.Metadata))
                     {
-                        builder.Append("With metadata: <br/><br/>");
+                        builder.Append("<p style=\"white-space: nowrap;\">With metadata: </p>");
 
                         string beautified;
 
@@ -123,7 +123,7 @@ namespace TracingExperiment.Controllers
 
                 }
 
-                builder.Append("End request <br/><br/>");
+                builder.Append("<p style=\"white-space: nowrap;\">End request </p>");
 
                 var traceString = HttpUtility.HtmlEncode(builder.ToString());
 
@@ -134,7 +134,7 @@ namespace TracingExperiment.Controllers
                             (trace.ResponseTimestamp.Value - trace.RequestTimestamp.Value).TotalSeconds.ToString("#.##")),
                     Timestamp = trace.Timestamp.ToString(CultureInfo.InvariantCulture),
                     Uri = trace.RequestUri,
-                    Workflow = traceString
+                    Workflow = new HtmlString(HttpUtility.HtmlDecode(traceString)).ToHtmlString()
                 };
 
                 tracesVms.Add(item);
@@ -186,9 +186,9 @@ namespace TracingExperiment.Controllers
             XmlWriterSettings settings = new XmlWriterSettings
             {
                 Indent = true,
-                IndentChars = "  ",
-                NewLineChars = "\r\n",
-                NewLineHandling = NewLineHandling.Replace
+                NewLineHandling = NewLineHandling.Replace,
+                NewLineOnAttributes = true,
+                
             };
 
             using (var writer = XmlWriter.Create(sb, settings))
@@ -204,7 +204,7 @@ namespace TracingExperiment.Controllers
 
             foreach (var line in linesOf)
             {
-                newStringBuilder.AppendLine(string.Format("<span style=\"white-space: pre-line\">{0}</span>", line));
+                newStringBuilder.AppendLine(string.Format("<p style=\"white-space: nowrap;\">{0}</p>", HttpUtility.HtmlEncode(line)));
             }
 
             sbString = newStringBuilder.ToString();
