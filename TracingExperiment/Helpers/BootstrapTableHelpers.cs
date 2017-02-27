@@ -16,7 +16,7 @@ namespace TracingExperiment.Helpers
         /// <param name="pagination">Is pagination required.</param>
         /// <param name="htmlAttributes">An object that contains the HTML attributes to set for the element.</param>
         /// <returns>Html representation of the control.</returns>
-        public static ITableBuilder BootstrapTable(this HtmlHelper helper, string url = null, System.Web.Mvc.TablePaginationOption pagination = System.Web.Mvc.TablePaginationOption.none, object htmlAttributes = null)
+        public static ITableBuilder BootstrapTable(this HtmlHelper helper, string url = null, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
             return new TableBuilder(null, url, pagination, htmlAttributes);
         }
@@ -30,7 +30,7 @@ namespace TracingExperiment.Helpers
         /// <param name="pagination">Is pagination required.</param>
         /// <param name="htmlAttributes">An object that contains the HTML attributes to set for the element.</param>
         /// <returns>Html representation of the control.</returns>
-        public static ITableBuilder BootstrapTable(this HtmlHelper helper, string id, string url, System.Web.Mvc.TablePaginationOption pagination = System.Web.Mvc.TablePaginationOption.none, object htmlAttributes = null)
+        public static ITableBuilder BootstrapTable(this HtmlHelper helper, string id, string url, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
             return new TableBuilder(id, url, pagination, htmlAttributes);
         }
@@ -44,7 +44,7 @@ namespace TracingExperiment.Helpers
         /// <param name="pagination">Is pagination required</param>
         /// <param name="htmlAttributes">An object that contains the HTML attributes to set for the element.</param>
         /// <returns>Html representation of the control.</returns>
-        public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string url = null, System.Web.Mvc.TablePaginationOption pagination = System.Web.Mvc.TablePaginationOption.none, object htmlAttributes = null)
+        public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string url = null, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
             return BootstrapTable<TModel>(helper, null, url, pagination, htmlAttributes);
         }
@@ -59,7 +59,7 @@ namespace TracingExperiment.Helpers
         /// <param name="pagination">Is pagination required.</param>
         /// <param name="htmlAttributes">An object that contains the HTML attributes to set for the element.</param>
         /// <returns>Html representation of the control.</returns>
-        public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string id, string url, System.Web.Mvc.TablePaginationOption pagination = System.Web.Mvc.TablePaginationOption.none, object htmlAttributes = null)
+        public static ITableBuilderT<TModel> BootstrapTable<TModel>(this HtmlHelper helper, string id, string url, TablePaginationOption pagination = TablePaginationOption.none, object htmlAttributes = null)
         {
             return new TableBuilderT<TModel>(id, url, pagination, htmlAttributes);
         }

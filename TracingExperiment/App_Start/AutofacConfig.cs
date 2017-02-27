@@ -11,6 +11,7 @@ using TracingExperiment.IOC;
 using TracingExperiment.IOC.Interfaces;
 using TracingExperiment.Tracing;
 using TracingExperiment.Tracing.Bus;
+using TracingExperiment.Tracing.Concurrent;
 using TracingExperiment.Tracing.Database;
 using TracingExperiment.Tracing.Database.Interfaces;
 using TracingExperiment.Tracing.Handlers;
@@ -48,7 +49,7 @@ namespace TracingExperiment.App_Start
         private static void RegisterDependencies(ContainerBuilder builder)
         {
             builder.RegisterType<SimpleTracer>().As<ITracer>().InstancePerLifetimeScope();
-            builder.RegisterType<TraceStepper>().As<ITraceStepper>();
+            builder.RegisterType<TraceStepper>().As<ITraceStepper>().InstancePerLifetimeScope();
 
             builder.RegisterType<ApiLogHandler>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<Resolver>().As<IResolver>().SingleInstance();

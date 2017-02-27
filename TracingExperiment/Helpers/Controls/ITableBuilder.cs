@@ -17,33 +17,33 @@ namespace TracingExperiment.Helpers.Controls
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        TResult ApplyToColumns(System.Web.Mvc.ColumnOption option);
+        TResult ApplyToColumns(ColumnOption option);
 
         /// <summary>
         /// Apply an option to either a table or a column.
         /// </summary>
         /// <param name="options">Enumeration option to apply</param>
-        TResult Apply(params System.Web.Mvc.TableOption[] options);
+        TResult Apply(params TableOption[] options);
 
         /// <summary>
         /// Apply an option value to the table or a column.
         /// </summary>
         /// <param name="option">Enumeration property to apply.</param>
         /// <param name="value">Property value.</param>
-        TResult Apply(System.Web.Mvc.TableOption option, object value);
+        TResult Apply(TableOption option, object value);
 
         /// <summary>
         /// Apply an option object array to the table or a column.
         /// </summary>
         /// <param name="option">Enumeration property to apply.</param>
         /// <param name="value">Property value.</param>
-        TResult Apply(System.Web.Mvc.TableOption option, object[] value);
+        TResult Apply(TableOption option, object[] value);
 
         /// <summary>
         /// Remove an option to either a table or a column.
         /// </summary>
         /// <param name="options">Enumeration option to remove.</param>
-        TResult Cease(params System.Web.Mvc.TableOption[] options);
+        TResult Cease(params TableOption[] options);
 
         /// <summary>
         /// Add one or more columns (fields) to the table.
@@ -67,26 +67,26 @@ namespace TracingExperiment.Helpers.Controls
         /// </summary>
         /// <param name="option">Column option to apply</param>
         /// <param name="value">Object value</param>
-        TResult Apply(System.Web.Mvc.ColumnOption option, object[] value);
+        TResult Apply(ColumnOption option, object[] value);
 
         /// <summary>
         /// Apply an option to a column.
         /// </summary>
         /// <param name="option">Column option to apply.</param>
         /// <param name="value">Property value.</param>
-        TResult Apply(System.Web.Mvc.ColumnOption option, object value);
+        TResult Apply(ColumnOption option, object value);
 
         /// <summary>
         /// Apply a boolean true value to one or more column options.
         /// </summary>
         /// <param name="options">Column option(s) to apply.</param>
-        TResult Apply(params System.Web.Mvc.ColumnOption[] options);
+        TResult Apply(params ColumnOption[] options);
 
         /// <summary>
         /// Apply a boolean false value to one or more column options.
         /// </summary>
         /// <param name="options">Column option(s) to apply.</param>
-        TResult Cease(params System.Web.Mvc.ColumnOption[] options);
+        TResult Cease(params ColumnOption[] options);
     }
 
     /// <summary>

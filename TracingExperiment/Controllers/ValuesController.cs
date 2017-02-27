@@ -7,7 +7,6 @@ using System.Web.Http;
 using System.Xml;
 using TracingExperiment.IOC.Interfaces;
 using TracingExperiment.MathService;
-using TracingExperiment.Tracing.Interfaces;
 using TracingExperiment.Tracing.Utils;
 
 namespace TracingExperiment.Controllers
@@ -16,34 +15,37 @@ namespace TracingExperiment.Controllers
     public class ValuesController : ApiController
     {
         private readonly IResolver _resolver;
-        private readonly ITraceStepper _traceStepper;
         // GET api/values
 
-        public ValuesController(IResolver resolver, ITraceStepper traceStepper)
+        public ValuesController(IResolver resolver)
         {
             _resolver = resolver;
-            _traceStepper = traceStepper;
         }
 
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
 
         // GET api/values/5
         public string Get(int id)
         {
-            _traceStepper.WriteMessage(string.Format("Entered controller method with id = {0}", id));
-            _traceStepper.WriteMessage("Calling wcf service");
-
-            var client = InitializeHttpClient();
-            var response = client.GetData(new GetDataRequest
+            using (var traceStepper = TraceStepUtil.Get())
             {
-                value = id
-            });
+                traceStepper.WriteMessage(string.Format("Entered controller method with id = {0}", id));
+                traceStepper.WriteMessage("Calling wcf service");
 
-            _traceStepper.WriteMessage("Finished calling wcf service");
-            return response.GetDataResult;
+                var client = InitializeHttpClient();
+                var response = client.GetData(new GetDataRequest
+                {
+                    value = id
+                });
+
+                var result = response.GetDataResult;
+                traceStepper.WriteMessage("Finished calling wcf service");
+                
+                return result;
+            }
         }
 
         // POST api/values

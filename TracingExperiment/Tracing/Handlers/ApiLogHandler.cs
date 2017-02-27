@@ -58,9 +58,9 @@ namespace TracingExperiment.Tracing.Handlers
 
             _traceStepper.Dispose();
 
-            var represetnation = _tracer.ToStringRepresentation();
+            var traceSteps = _tracer.TraceSteps;
 
-            await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, represetnation));
+            await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, traceSteps));
 
             return response;
         }

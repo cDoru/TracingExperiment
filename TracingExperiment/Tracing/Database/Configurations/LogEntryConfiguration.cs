@@ -12,7 +12,7 @@ namespace TracingExperiment.Tracing.Database.Configurations
             
         }
 
-        public LogEntryConfiguration(string schema)
+        private LogEntryConfiguration(string schema)
         {
             ToTable(TableName, schema);
 
@@ -21,8 +21,8 @@ namespace TracingExperiment.Tracing.Database.Configurations
             Property(x => x.Timestamp).HasColumnName("Timestamp").HasColumnType("datetime").IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.RequestTimestamp).HasColumnName("RequestTimestamp").HasColumnType("datetime").HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.ResponseTimestamp).HasColumnName("ResponseTimestamp").HasColumnType("datetime").HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            Property(x => x.TraceData).HasColumnName("TraceData").HasColumnType("ntext").HasMaxLength(2000000).IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.RequestUri).HasColumnName("RequestUri").HasColumnType("nvarchar").HasMaxLength(256).IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            HasMany(x => x.Steps).WithRequired(x => x.LogEntry).Map(x => x.MapKey("StepId"));
         }
     }
 }

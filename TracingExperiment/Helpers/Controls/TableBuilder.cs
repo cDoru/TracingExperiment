@@ -28,28 +28,28 @@ namespace TracingExperiment.Helpers.Controls
         #endregion
 
         /// <inheritDoc/>
-        public TableBuilder(string id = null, string url = null, System.Web.Mvc.TablePaginationOption? sidePagination = System.Web.Mvc.TablePaginationOption.none, object htmlAttributes = null)
+        public TableBuilder(string id = null, string url = null, TablePaginationOption? sidePagination = TablePaginationOption.none, object htmlAttributes = null)
         {
             _builder = new TagBuilder("table");
             if (!string.IsNullOrEmpty(id))
                 _builder.Attributes.Add("id", id);
 
-            if (sidePagination != System.Web.Mvc.TablePaginationOption.none)
+            if (sidePagination != TablePaginationOption.none)
             {
-                Apply(System.Web.Mvc.TableOption.pagination);
+                Apply(TableOption.pagination);
                 ApplyToTable(sidePagination.FieldName(), sidePagination.FieldValue());
             }
 
             if (!string.IsNullOrEmpty(url))
-                Apply(System.Web.Mvc.TableOption.url, url);
+                Apply(TableOption.url, url);
 
             _builder.MergeAttributes(htmlAttributes.HtmlAttributesToDictionary());
 
-            Apply(System.Web.Mvc.TableOption.toggle);
+            Apply(TableOption.toggle);
         }
 
         /// <inheritDoc/>
-        public ITableBuilder ApplyToColumns(System.Web.Mvc.ColumnOption option)
+        public ITableBuilder ApplyToColumns(ColumnOption option)
         {
             _columns.ForEach(s => ApplyToColumn(s.InnerHtml, option.FieldName(), option.FieldValue() ?? true.ToStringLower()));
             return this;
@@ -79,11 +79,11 @@ namespace TracingExperiment.Helpers.Controls
             }
 
             var column = new TagBuilder("th");
-            column.Attributes.Add(System.Web.Mvc.ColumnOption.field.FieldName(), field);
+            column.Attributes.Add(ColumnOption.field.FieldName(), field);
             if (sortable)
             {
-                column.Attributes.Add(System.Web.Mvc.ColumnOption.sortable.FieldName(), true.ToStringLower());
-                column.Attributes.Add(System.Web.Mvc.ColumnOption.sorter.FieldName(), sorter);
+                column.Attributes.Add(ColumnOption.sortable.FieldName(), true.ToStringLower());
+                column.Attributes.Add(ColumnOption.sorter.FieldName(), sorter);
             }
             column.InnerHtml = title;
             _columns.Add(column);

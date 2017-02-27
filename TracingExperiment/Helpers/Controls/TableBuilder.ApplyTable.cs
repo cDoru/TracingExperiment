@@ -17,22 +17,22 @@ namespace TracingExperiment.Helpers.Controls
         }
 
 		/// <exclude/>
-        public ITableBuilder Apply(System.Web.Mvc.TableOption option, object value)
+        public ITableBuilder Apply(TableOption option, object value)
         {
             return ApplyToTable(option.FieldName(), value);
         }
 
         /// <exclude/>
-        public ITableBuilder Apply(System.Web.Mvc.TableOption option, object[] value)
+        public ITableBuilder Apply(TableOption option, object[] value)
         {
-            if (option.GetType() == typeof(System.Web.Mvc.TableOption) && option == System.Web.Mvc.TableOption.columns)
+            if (option.GetType() == typeof(TableOption) && option == TableOption.columns)
                 return Columns(value.Select(o => o.ToString()).ToArray());
             else
                 return ApplyToTable(option.FieldName(), string.Format("[{0}]", string.Join(",", value)));
         }
 
         /// <exclude/>
-        public ITableBuilder Apply(params System.Web.Mvc.TableOption[] options)
+        public ITableBuilder Apply(params TableOption[] options)
         {
             options.ForEach(option =>
             {
@@ -42,7 +42,7 @@ namespace TracingExperiment.Helpers.Controls
         }
 
         /// <exclude/>
-        public ITableBuilder Cease(params System.Web.Mvc.TableOption[] options)
+        public ITableBuilder Cease(params TableOption[] options)
         {
             options.ForEach(option =>
             {

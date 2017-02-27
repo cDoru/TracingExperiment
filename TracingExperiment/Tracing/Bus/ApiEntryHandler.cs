@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Enexure.MicroBus;
 using TracingExperiment.Tracing.Database;
@@ -20,16 +22,34 @@ namespace TracingExperiment.Tracing.Bus
 
         public Task Handle(ApiEntryCommand command)
         {
-            _context.Save(new LogEntry
+            var logEntry = new LogEntry
             {
                 Id = Guid.NewGuid(),
+                Timestamp = _now.UtcNow,
                 RequestTimestamp = command.Entry.RequestTimestamp,
-                RequestUri = command.Entry.RequestUri,
                 ResponseTimestamp = command.Entry.ResponseTimestamp,
-                Timestamp = _now.UtcNow, // hide this under an interface
-                TraceData = command.Trace
-            });
+                RequestUri = command.Entry.RequestUri,
+                Steps = new List<LogStep>()
+            };
 
+            foreach (var logStep in command.Steps.OrderBy(x => x.Index).ToList().Select(step => new LogStep
+            {
+                Id = Guid.NewGuid(),
+                LogEntry = logEntry,
+                Index = step.Index,
+                Metadata = step.Metadata,
+                StepTimestamp = step.StepTimestamp,
+                Type = step.Type,
+                Frame = step.Frame,
+                Name = step.Name,
+                Message = step.Message,
+                Source = step.Source,
+            }))
+            {
+                logEntry.Steps.Add(logStep);
+            }
+
+            _context.Save(logEntry);
             return Task.FromResult(0);
         }
     }

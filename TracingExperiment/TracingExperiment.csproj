@@ -51,10 +51,6 @@
       <HintPath>..\packages\Autofac.WebApi2.4.0.1\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BootstrapTable, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\bootstrap-table.mvc.1.1.1\lib\net452\BootstrapTable.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Enexure.MicroBus, Version=3.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Enexure.MicroBus.3.5.0\lib\net451\Enexure.MicroBus.dll</HintPath>
       <Private>True</Private>
@@ -274,9 +270,9 @@
     <Compile Include="IOC\Interfaces\IResolver.cs" />
     <Compile Include="IOC\Resolver.cs" />
     <Compile Include="Keys.cs" />
-    <Compile Include="Migrations\201702251737490_InitialMigration.cs" />
-    <Compile Include="Migrations\201702251737490_InitialMigration.Designer.cs">
-      <DependentUpon>201702251737490_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201702270905227_InitialMigration.cs" />
+    <Compile Include="Migrations\201702270905227_InitialMigration.Designer.cs">
+      <DependentUpon>201702270905227_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -294,6 +290,21 @@
     <Compile Include="Tracing\Bus\ApiEntryCommand.cs" />
     <Compile Include="Tracing\Bus\ApiEntryHandler.cs" />
     <Compile Include="Tracing\Bus\BusDomainModule.cs" />
+    <Compile Include="Tracing\Concurrent\AtomicInteger.cs" />
+    <Compile Include="Tracing\Concurrent\ConcurrentList.cs" />
+    <Compile Include="Tracing\Concurrent\IAtomicValue.cs" />
+    <Compile Include="Tracing\Concurrent\IValueAdder.cs" />
+    <Compile Include="Tracing\Concurrent\IValueReader.cs" />
+    <Compile Include="Tracing\Concurrent\IValueWriter.cs" />
+    <Compile Include="Tracing\Concurrent\IVolatileValue.cs" />
+    <Compile Include="Tracing\Concurrent\SimpleTracer.cs" />
+    <Compile Include="Tracing\Concurrent\SynchronizedList.cs" />
+    <Compile Include="Tracing\Concurrent\ThreadSafeList.cs" />
+    <Compile Include="Tracing\Concurrent\TraceStep.cs" />
+    <Compile Include="Tracing\Concurrent\TraceStepper.cs" />
+    <Compile Include="Tracing\Database\Configurations\LogStepConfiguration.cs" />
+    <Compile Include="Tracing\Database\LogStep.cs" />
+    <Compile Include="Tracing\Database\StepType.cs" />
     <Compile Include="Tracing\Database\TracingConfiguration.cs" />
     <Compile Include="Tracing\Database\Configurations\LogEntryConfiguration.cs" />
     <Compile Include="Tracing\Database\Interfaces\IEntity.cs" />
@@ -306,14 +317,12 @@
     <Compile Include="Tracing\Interfaces\IMessageLogging.cs" />
     <Compile Include="Tracing\Interfaces\ITracer.cs" />
     <Compile Include="Tracing\Interfaces\ITraceStepper.cs" />
-    <Compile Include="Tracing\SimpleTracer.cs" />
-    <Compile Include="Tracing\TraceStep.cs" />
-    <Compile Include="Tracing\TraceStepper.cs" />
     <Compile Include="Tracing\Utils\AsyncHelper.cs" />
     <Compile Include="Tracing\Utils\Interfaces\INow.cs" />
     <Compile Include="Tracing\Utils\NowImplementation.cs" />
     <Compile Include="Tracing\Utils\StackTraceParser.cs" />
     <Compile Include="Tracing\Utils\TimingOutLock.cs" />
+    <Compile Include="Tracing\Utils\TraceStepUtil.cs" />
     <Compile Include="Tracing\WCF\TracingMessageBehavior.cs" />
     <Compile Include="Tracing\WCF\TracingMessageBehaviorElement.cs" />
     <Compile Include="Tracing\WCF\TracingMessageDispatcher.cs" />
@@ -459,9 +468,10 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\MathService\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702251737490_InitialMigration.resx">
-      <DependentUpon>201702251737490_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702270905227_InitialMigration.resx">
+      <DependentUpon>201702270905227_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

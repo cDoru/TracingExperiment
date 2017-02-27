@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using TracingExperiment.Tracing.Concurrent;
+
 namespace TracingExperiment.Tracing.Interfaces
 {
     public interface ITracer
@@ -7,7 +10,6 @@ namespace TracingExperiment.Tracing.Interfaces
 
         void WriteOperation(string source, string frame, 
             string description, string name, string operationMetadata);
-
-        string ToStringRepresentation();
+        List<TraceStep> TraceSteps { get; } 
     }
 }

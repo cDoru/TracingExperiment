@@ -1,4 +1,6 @@
-﻿using Enexure.MicroBus;
+﻿using System.Collections.Generic;
+using Enexure.MicroBus;
+using TracingExperiment.Tracing.Concurrent;
 using TracingExperiment.Tracing.Handlers;
 
 namespace TracingExperiment.Tracing.Bus
@@ -6,12 +8,12 @@ namespace TracingExperiment.Tracing.Bus
     public class ApiEntryCommand : ICommand
     {
         public ApiLogEntry Entry { get; private set; }
-        public string Trace { get; private set; }
+        public List<TraceStep> Steps { get; private set; }
 
-        public ApiEntryCommand(ApiLogEntry entry, string trace)
+        public ApiEntryCommand(ApiLogEntry entry, List<TraceStep> steps)
         {
             Entry = entry;
-            Trace = trace;
+            Steps = steps;
         }
     }
 }

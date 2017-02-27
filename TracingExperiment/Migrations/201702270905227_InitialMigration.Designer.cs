@@ -13,7 +13,7 @@ namespace TracingExperiment.Tracing.Database
         
         string IMigrationMetadata.Id
         {
-            get { return "201702251737490_InitialMigration"; }
+            get { return "201702270905227_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source

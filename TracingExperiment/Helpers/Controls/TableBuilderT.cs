@@ -13,7 +13,7 @@ namespace TracingExperiment.Helpers.Controls
     internal class TableBuilderT<TModel> : TableBuilder, IColumnBuilderT<TModel>
     {
         /// <exclude/>
-        public TableBuilderT(string id = null, string url = null, System.Web.Mvc.TablePaginationOption sidePagination = System.Web.Mvc.TablePaginationOption.none, 
+        public TableBuilderT(string id = null, string url = null, TablePaginationOption sidePagination = TablePaginationOption.none, 
             object htmlAttributes = null)
             : base(id, url, sidePagination, htmlAttributes)
         {
@@ -45,35 +45,35 @@ namespace TracingExperiment.Helpers.Controls
         }
 
         /// <inheritDoc/>
-        public new ITableBuilderT<TModel> ApplyToColumns(System.Web.Mvc.ColumnOption option)
+        public new ITableBuilderT<TModel> ApplyToColumns(ColumnOption option)
         {
             base.ApplyToColumns(option);
             return this;
         }
 
         /// <inheritDoc/>
-        public new ITableBuilderT<TModel> Apply(params System.Web.Mvc.TableOption[] options)
+        public new ITableBuilderT<TModel> Apply(params TableOption[] options)
         {
             base.Apply(options);
             return this;
         }
 
         /// <inheritDoc/>
-        public new ITableBuilderT<TModel> Apply(System.Web.Mvc.TableOption option, object value)
+        public new ITableBuilderT<TModel> Apply(TableOption option, object value)
         {
             base.Apply(option, value);
             return this;
         }
 
         /// <inheritDoc/>
-        public new ITableBuilderT<TModel> Apply(System.Web.Mvc.TableOption option, object[] value)
+        public new ITableBuilderT<TModel> Apply(TableOption option, object[] value)
         {
             base.Apply(option, value);
             return this;
         }
 
         /// <inheritDoc/>
-        public new ITableBuilderT<TModel> Cease(params System.Web.Mvc.TableOption[] options)
+        public new ITableBuilderT<TModel> Cease(params TableOption[] options)
         {
             base.Cease(options);
             return this;
@@ -89,28 +89,28 @@ namespace TracingExperiment.Helpers.Controls
 
         #region IColumnApply
         /// <inheritDoc/>
-        public new IColumnBuilderT<TModel> Apply(System.Web.Mvc.ColumnOption option, object[] value)
+        public new IColumnBuilderT<TModel> Apply(ColumnOption option, object[] value)
         {
             base.Apply(option, value);
             return this;
         }
 
         /// <inheritDoc/>
-        IColumnBuilderT<TModel> IColumnApply<IColumnBuilderT<TModel>>.Apply(System.Web.Mvc.ColumnOption option, object value)
+        IColumnBuilderT<TModel> IColumnApply<IColumnBuilderT<TModel>>.Apply(ColumnOption option, object value)
         {
             base.Apply(option, value);
             return this;
         }
 
         /// <inheritDoc/>
-        IColumnBuilderT<TModel> IColumnApply<IColumnBuilderT<TModel>>.Apply(params System.Web.Mvc.ColumnOption[] options)
+        IColumnBuilderT<TModel> IColumnApply<IColumnBuilderT<TModel>>.Apply(params ColumnOption[] options)
         {
             base.Apply(options);
             return this;
         }
 
         /// <inheritDoc/>
-        public new IColumnBuilderT<TModel> Cease(params System.Web.Mvc.ColumnOption[] options)
+        public new IColumnBuilderT<TModel> Cease(params ColumnOption[] options)
         {
             base.Cease(options);
             return this;
@@ -119,21 +119,21 @@ namespace TracingExperiment.Helpers.Controls
 
         #region ITableBuilderT
         /// <inheritDoc/>
-        public IColumnBuilderT<TModel> Apply<TProperty>(Expression<Func<TModel, TProperty>> expression, System.Web.Mvc.ColumnOption option, object[] value)
+        public IColumnBuilderT<TModel> Apply<TProperty>(Expression<Func<TModel, TProperty>> expression, ColumnOption option, object[] value)
         {
             ApplyToColumnT(expression, option.FieldName(), string.Format("[{0}]", string.Join(",", value)));
             return this;
         }
 
         /// <inheritDoc/>
-        public IColumnBuilderT<TModel> Apply<TProperty>(Expression<Func<TModel, TProperty>> expression, System.Web.Mvc.ColumnOption option, object value)
+        public IColumnBuilderT<TModel> Apply<TProperty>(Expression<Func<TModel, TProperty>> expression, ColumnOption option, object value)
         {
             ApplyToColumnT(expression, option.FieldName(), value);
             return this;
         }
 
         /// <inheritDoc/>
-        public IColumnBuilderT<TModel> Apply<TProperty>(Expression<Func<TModel, TProperty>> expression, params System.Web.Mvc.ColumnOption[] options)
+        public IColumnBuilderT<TModel> Apply<TProperty>(Expression<Func<TModel, TProperty>> expression, params ColumnOption[] options)
         {
             options.ForEach(option =>
             {
@@ -143,7 +143,7 @@ namespace TracingExperiment.Helpers.Controls
         }
 
         /// <inheritDoc/>
-        public IColumnBuilderT<TModel> Cease<TProperty>(Expression<Func<TModel, TProperty>> expression, params System.Web.Mvc.ColumnOption[] options)
+        public IColumnBuilderT<TModel> Cease<TProperty>(Expression<Func<TModel, TProperty>> expression, params ColumnOption[] options)
         {
             options.ForEach(option =>
             {

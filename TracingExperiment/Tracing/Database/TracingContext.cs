@@ -50,6 +50,7 @@ namespace TracingExperiment.Tracing.Database
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new LogEntryConfiguration());
+            modelBuilder.Configurations.Add(new LogStepConfiguration());
         }
 
         public void Attach<T>(T entity) where T : class, IEntity
@@ -128,7 +129,6 @@ namespace TracingExperiment.Tracing.Database
                 throw new TracingContextException(ex.Message);
             }
         }
-
 
         private static Exception HandleConstraintException(ConstraintException ce)
         {

@@ -18,19 +18,19 @@ namespace TracingExperiment.Helpers.Controls
         }
 
         /// <exclude/>
-        public IColumnBuilder Apply(System.Web.Mvc.ColumnOption option, object value)
+        public IColumnBuilder Apply(ColumnOption option, object value)
         {
             return ApplyToColumn(option.FieldName(), value);
         }
 
         /// <exclude/>
-        public IColumnBuilder Apply(System.Web.Mvc.ColumnOption option, object[] value)
+        public IColumnBuilder Apply(ColumnOption option, object[] value)
         {
             return ApplyToColumn(option.FieldName(), string.Format("[{0}]", string.Join(",", value)));
         }
 
         /// <exclude/>
-        public IColumnBuilder Apply(params System.Web.Mvc.ColumnOption[] options)
+        public IColumnBuilder Apply(params ColumnOption[] options)
         {
             options.ForEach(option =>
             {
@@ -40,7 +40,7 @@ namespace TracingExperiment.Helpers.Controls
         }
 
         /// <exclude/>
-        public IColumnBuilder Cease(params System.Web.Mvc.ColumnOption[] options)
+        public IColumnBuilder Cease(params ColumnOption[] options)
         {
             options.ForEach(option =>
             {

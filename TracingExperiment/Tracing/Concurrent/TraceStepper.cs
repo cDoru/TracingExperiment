@@ -4,7 +4,7 @@ using ProductionStackTrace;
 using TracingExperiment.Tracing.Interfaces;
 using TracingExperiment.Tracing.Utils;
 
-namespace TracingExperiment.Tracing
+namespace TracingExperiment.Tracing.Concurrent
 {
     public class TraceStepper : ITraceStepper
     {
