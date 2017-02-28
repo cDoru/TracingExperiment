@@ -7,10 +7,17 @@ namespace TracingExperiment.Tracing.WCF
     {
         private const string Key = "log-workflow";
 
-        public bool ShouldLog()
+        public WcfHelper()
+        {
+            InitializeShouldLog();
+        }
+
+        private void InitializeShouldLog()
         {
             bool log;
-            return bool.TryParse(WebConfigurationManager.AppSettings[Key], out log) && log;
+            ShouldLog = bool.TryParse(WebConfigurationManager.AppSettings[Key], out log) && log;
         }
+
+        public bool ShouldLog { get; private set; }
     }
 }

@@ -11,13 +11,15 @@ namespace TracingExperiment.Tracing.Concurrent
     public class SimpleTracer : ITracer
     {
         private readonly INow _now;
+        private readonly IHelper _helper;
         private readonly object _thisLock = new Object();
         private readonly ConcurrentList<TraceStep> _steps;
         private AtomicInteger _index;
 
-        public SimpleTracer(INow now)
+        public SimpleTracer(INow now, IHelper helper)
         {
             _now = now;
+            _helper = helper;
             using (new TimingOutLock(_thisLock))
             {
                 _steps = new ConcurrentList<TraceStep>();
@@ -28,79 +30,91 @@ namespace TracingExperiment.Tracing.Concurrent
 
         public void WriteMessage(string source, string frame, string message)
         {
-            using (new TimingOutLock(_thisLock))
+            if (_helper.ShouldLog)
             {
-                var index = _index.GetValue();
-
-                var step = new TraceStep
+                using (new TimingOutLock(_thisLock))
                 {
-                    Index = index,
-                    Message = message,
-                    Frame = frame,
-                    Source = source,
-                    StepTimestamp = _now.UtcNow,
-                    Metadata = string.Empty,
-                    Type = StepType.Message,
-                    Name = string.Empty
-                };
+                    var index = _index.GetValue();
 
-                _steps.Add(step);
+                    var step = new TraceStep
+                    {
+                        Index = index,
+                        Message = message,
+                        Frame = frame,
+                        Source = source,
+                        StepTimestamp = _now.UtcNow,
+                        Metadata = string.Empty,
+                        Type = StepType.Message,
+                        Name = string.Empty
+                    };
 
-                _index.Increment();
+                    _steps.Add(step);
+
+                    _index.Increment();
+                }
             }
         }
 
         public void WriteException(string source, string frame, string exception, string description, string name)
         {
-            using (new TimingOutLock(_thisLock))
+            if (_helper.ShouldLog)
             {
-                var index = _index.GetValue();
-
-                var step = new TraceStep
+                using (new TimingOutLock(_thisLock))
                 {
-                    Name = name,
-                    Index = index,
-                    Frame = frame,
-                    Source = source,
-                    Metadata = exception,
-                    Type = StepType.Exception,
-                    StepTimestamp = _now.UtcNow,
-                    Message = description
-                };
+                    var index = _index.GetValue();
 
-                _steps.Add(step);
+                    var step = new TraceStep
+                    {
+                        Name = name,
+                        Index = index,
+                        Frame = frame,
+                        Source = source,
+                        Metadata = exception,
+                        Type = StepType.Exception,
+                        StepTimestamp = _now.UtcNow,
+                        Message = description
+                    };
 
-                _index.Increment();
+                    _steps.Add(step);
+
+                    _index.Increment();
+                }
             }
         }
 
         public void WriteOperation(string source, string frame, string description, string name, string operationMetadata)
         {
-            using (new TimingOutLock(_thisLock))
+            if (_helper.ShouldLog)
             {
-                var index = _index.GetValue();
-
-                var step = new TraceStep
+                using (new TimingOutLock(_thisLock))
                 {
-                    Index = index,
-                    Frame = frame,
-                    Source = source,
-                    Metadata = operationMetadata,
-                    Type = StepType.Operation,
-                    StepTimestamp = _now.UtcNow,
-                    Message = description,
-                    Name = name
-                };
+                    var index = _index.GetValue();
 
-                _steps.Add(step);
+                    var step = new TraceStep
+                    {
+                        Index = index,
+                        Frame = frame,
+                        Source = source,
+                        Metadata = operationMetadata,
+                        Type = StepType.Operation,
+                        StepTimestamp = _now.UtcNow,
+                        Message = description,
+                        Name = name
+                    };
 
-                _index.Increment();
+                    _steps.Add(step);
+
+                    _index.Increment();
+                }
             }
         }
 
         public List<TraceStep> TraceSteps
         {
-            get { return _steps.OrderBy(x => x.Index).ToList(); }
+            get
+            {
+                return !_helper.ShouldLog ? new List<TraceStep>() : _steps.OrderBy(x => x.Index).ToList();
+            }
         }
     }
 }

@@ -9,7 +9,7 @@
         /// <summary>
         /// ShouldLog method stub - reads the config to determine if we should log or not
         /// </summary>
-        /// <returns></returns>
-        bool ShouldLog();
+        /// <value></value>
+        bool ShouldLog { get; }
     }
 }

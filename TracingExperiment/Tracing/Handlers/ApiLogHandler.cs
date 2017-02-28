@@ -20,47 +20,55 @@ namespace TracingExperiment.Tracing.Handlers
         private readonly ITracer _tracer;
         private readonly ITraceStepper _traceStepper;
         private readonly IMicroBus _bus;
+        private readonly IHelper _helper;
 
-        public ApiLogHandler(ITracer tracer, ITraceStepper traceStepper, IMicroBus bus)
+        public ApiLogHandler(ITracer tracer, ITraceStepper traceStepper, IMicroBus bus, IHelper helper)
         {
             _tracer = tracer;
             _traceStepper = traceStepper;
             _bus = bus;
+            _helper = helper;
         }
 
         private void ProcessRequest(Task<string> task, ApiLogEntry apiLogEntry )
         {
-            apiLogEntry.RequestContentBody = task.Result;
-            _traceStepper.WriteOperation("Web API request", "request headers", apiLogEntry.RequestHeaders);
-            _traceStepper.WriteOperation("Web API request", "query string", apiLogEntry.RequestUri);
-            _traceStepper.WriteOperation("Web API request", "body request", apiLogEntry.RequestContentBody);
+            if (_helper.ShouldLog)
+            {
+                apiLogEntry.RequestContentBody = task.Result;
+                _traceStepper.WriteOperation("Web API request", "request headers", apiLogEntry.RequestHeaders);
+                _traceStepper.WriteOperation("Web API request", "query string", apiLogEntry.RequestUri);
+                _traceStepper.WriteOperation("Web API request", "body request", apiLogEntry.RequestContentBody);
+            }
         }
 
         private async Task<HttpResponseMessage> ProcessResponse(Task<HttpResponseMessage> task, ApiLogEntry apiLogEntry)
         {
             var response = task.Result;
 
-            // Update the API log entry with response info
-            apiLogEntry.ResponseStatusCode = (int)response.StatusCode;
-            apiLogEntry.ResponseTimestamp = DateTime.Now;
-
-            if (response.Content != null)
+            if (_helper.ShouldLog)
             {
-                apiLogEntry.ResponseContentBody = response.Content.ReadAsStringAsync().Result;
-                apiLogEntry.ResponseContentType = response.Content.Headers.ContentType.MediaType;
-                apiLogEntry.ResponseHeaders = SerializeHeaders(response.Content.Headers);
+                // Update the API log entry with response info
+                apiLogEntry.ResponseStatusCode = (int)response.StatusCode;
+                apiLogEntry.ResponseTimestamp = DateTime.Now;
+
+                if (response.Content != null)
+                {
+                    apiLogEntry.ResponseContentBody = response.Content.ReadAsStringAsync().Result;
+                    apiLogEntry.ResponseContentType = response.Content.Headers.ContentType.MediaType;
+                    apiLogEntry.ResponseHeaders = SerializeHeaders(response.Content.Headers);
+                }
+
+                // TODO: Save the API log entry to the database
+
+                _traceStepper.WriteOperation("Web API response", "response body", apiLogEntry.ResponseContentBody);
+                _traceStepper.WriteOperation("Web API response", "response headers", apiLogEntry.ResponseHeaders);
+
+                _traceStepper.Dispose();
+
+                var traceSteps = _tracer.TraceSteps;
+
+                await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, traceSteps));
             }
-
-            // TODO: Save the API log entry to the database
-
-            _traceStepper.WriteOperation("Web API response", "response body", apiLogEntry.ResponseContentBody);
-            _traceStepper.WriteOperation("Web API response", "response headers", apiLogEntry.ResponseHeaders);
-
-            _traceStepper.Dispose();
-
-            var traceSteps = _tracer.TraceSteps;
-
-            await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, traceSteps));
 
             return response;
         }
@@ -70,7 +78,12 @@ namespace TracingExperiment.Tracing.Handlers
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            var apiLogEntry = CreateApiLogEntryWithRequestData(request);
+            ApiLogEntry apiLogEntry = null;
+
+            if (_helper.ShouldLog)
+            {
+                apiLogEntry = CreateApiLogEntryWithRequestData(request);                
+            }
 
             if (request.Content != null)
             {

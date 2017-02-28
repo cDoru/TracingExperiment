@@ -62,7 +62,7 @@ namespace TracingExperiment.Tracing.WCF
         {
             try
             {
-                if (_helper.ShouldLog())
+                if (_helper.ShouldLog)
                 {
                     _logger.WriteOperation("Outgoing wcf request ", Keys.WcfClientNameKey, MessageUtils.MessageToXml(requestCopyForLogging));
                 }
@@ -109,7 +109,7 @@ namespace TracingExperiment.Tracing.WCF
         {
             try
             {
-                if (_helper.ShouldLog())
+                if (_helper.ShouldLog)
                 {
                     _logger.WriteOperation("Incoming wcf reply ", Keys.WcfClientNameKey, MessageUtils.MessageToXml(replyCopyForLogging));
                 }
