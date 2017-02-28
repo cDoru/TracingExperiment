@@ -6,10 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TracingExperiment.IOC.Interfaces;
 using TracingExperiment.Models;
 using TracingExperiment.Resources;
 using TracingExperiment.Tracing.Database;
@@ -107,13 +105,7 @@ namespace TracingExperiment.Controllers
                         {
                             // xml 
                             // operation metadata is xml in our case
-                            //var document = new XmlDocument();
-                            //document.LoadXml(tracestep.Metadata.Replace(xmlHeader, ""));
-                            //beautified = Beautify(document);
-
                              beautified = XmlPrettifyHelper.Prettify(tracestep.Metadata.Replace(xmlHeader, ""));
-                            //beautified = string.Format("<pre><code>{0}</code></pre>", beautified);
-                            //beautified = ConvertXmlToHtml(tracestep.Metadata.Replace(xmlHeader, ""));
                         }
                         else if (IsValidJson(tracestep.Metadata))
                         {
@@ -175,47 +167,6 @@ namespace TracingExperiment.Controllers
                 }
             }
             return false;
-        }
-
-        
-        
-        static public string Beautify(XmlDocument doc)
-        {
-            StringBuilder sb = new StringBuilder();
-            XmlWriterSettings settings = new XmlWriterSettings
-            {
-                Indent = true,
-                NewLineHandling = NewLineHandling.Replace,
-                NewLineOnAttributes = true,
-                
-            };
-
-            using (var writer = XmlWriter.Create(sb, settings))
-            {
-                doc.Save(writer);
-            }
-
-            var sbString = sb.ToString();
-
-            var linesOf = sbString.Split(new[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries);
-
-            StringBuilder newStringBuilder = new StringBuilder();
-
-            foreach (var line in linesOf)
-            {
-                newStringBuilder.AppendLine(string.Format("<p style=\"white-space: nowrap;\">{0}</p>", HttpUtility.HtmlEncode(line)));
-            }
-
-            sbString = newStringBuilder.ToString();
-
-            return string.Format("<pre><code>{0}</code></pre>", sbString);
-        }
-
-        private static XmlElement GetElement(string xml)
-        {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            return doc.DocumentElement;
         }
     }
 }
