@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Reflection;
-using System.ServiceModel.Description;
 using System.Web.Compilation;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -9,7 +8,6 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using TracingExperiment.IOC;
 using TracingExperiment.IOC.Interfaces;
-using TracingExperiment.Tracing;
 using TracingExperiment.Tracing.Bus;
 using TracingExperiment.Tracing.Concurrent;
 using TracingExperiment.Tracing.Database;
@@ -38,12 +36,12 @@ namespace TracingExperiment.App_Start
             AutowireProperties(builder);
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterModule(new BusDomainModule());
+            builder.Register<IResolver>(x => new Resolver(Container));
 
             Container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacResolver(Container));
-            GlobalConfiguration.Configuration.DependencyResolver =
-                 new AutofacWebApiDependencyResolver(Container);
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
         }
 
         private static void RegisterDependencies(ContainerBuilder builder)
@@ -56,6 +54,7 @@ namespace TracingExperiment.App_Start
 
             builder.RegisterType<NowImplementation>().As<INow>().InstancePerLifetimeScope();
             builder.RegisterType<TracingContext>().As<ITracingContext>().InstancePerLifetimeScope();
+            builder.RegisterType<TraceStepUtil>().As<ITraceStepUtil>().InstancePerLifetimeScope();
         }
 
         private static void AutowireProperties(ContainerBuilder builder)

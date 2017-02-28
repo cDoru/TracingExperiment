@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Autofac;
+using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using TracingExperiment.Exceptions;
 using TracingExperiment.IOC.Interfaces;
@@ -13,41 +14,13 @@ namespace TracingExperiment.IOC
     /// </summary>
     public class Resolver : IResolver
     {
+        private readonly ILifetimeScope _scope;
         private const string ResolverFailure = "Failed to resolve type {0}. More details in the underlying exception.";
 
-        private AutofacWebApiDependencyResolver Container { get; set; }
-        private bool _initialized;
-        private static readonly object LockObject = new object();
-
-        private void CheckContainer()
+        public Resolver(ILifetimeScope scope)
         {
-            if (_initialized)
-            {
-                return;
-            }
-
-            using (new TimingOutLock(LockObject))
-            {
-                if (_initialized) return;
-                
-                // intiialize the container
-                var dependencyComponent = GlobalConfiguration.Configuration.DependencyResolver;
-                if (dependencyComponent == null)
-                    throw new NoDependencyInjectionSetupException("Dependency component not found");
-
-                // ReSharper disable once SuspiciousTypeConversion.Global
-                if (!(dependencyComponent is AutofacWebApiDependencyResolver))
-                {
-                    throw new NoAutofacContainerFoundException("Dependency resolver is not Autofac");
-                }
-
-                // ReSharper disable once TryCastAlwaysSucceeds
-                // ReSharper disable once SuspiciousTypeConversion.Global
-                Container = dependencyComponent as AutofacWebApiDependencyResolver;
-                _initialized = true;
-            }
+            _scope = scope;
         }
-    
         /// <summary>
         /// Resolves simple dependency based on the autofac di container
         /// </summary>
@@ -55,11 +28,9 @@ namespace TracingExperiment.IOC
         /// <returns></returns>
         public T Resolve<T>()
         {
-            CheckContainer();
-
             try
             {
-                return Container.Container.Resolve<T>();
+                return _scope.Resolve<T>();
             }
             catch(Exception exception)
             {

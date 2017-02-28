@@ -86,7 +86,7 @@ namespace TracingExperiment.Tracing.Concurrent
                     Frame = frame,
                     Source = source,
                     Metadata = operationMetadata,
-                    Type = StepType.Exception,
+                    Type = StepType.Operation,
                     StepTimestamp = _now.UtcNow,
                     Message = description,
                     Name = name

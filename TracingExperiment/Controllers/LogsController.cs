@@ -7,21 +7,20 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml;
-using System.Xml.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TracingExperiment.IOC.Interfaces;
 using TracingExperiment.Models;
-using TracingExperiment.Tracing.Concurrent;
+using TracingExperiment.Resources;
 using TracingExperiment.Tracing.Database;
 using TracingExperiment.Tracing.Database.Interfaces;
 using TracingExperiment.Tracing.Utils.Interfaces;
-using Formatting = Newtonsoft.Json.Formatting;
 
 namespace TracingExperiment.Controllers
 {
     public class LogsController : Controller
     {
-        private const int LogLimit = 1*24; // 1 day
+        private const int LogLimit = 2*24; // 2 days
         private readonly ITracingContext _context;
         private readonly INow _now;
 
@@ -108,13 +107,17 @@ namespace TracingExperiment.Controllers
                         {
                             // xml 
                             // operation metadata is xml in our case
-                            var document = new XmlDocument();
-                            document.LoadXml(tracestep.Metadata.Replace(xmlHeader, ""));
-                            beautified = Beautify(document);
+                            //var document = new XmlDocument();
+                            //document.LoadXml(tracestep.Metadata.Replace(xmlHeader, ""));
+                            //beautified = Beautify(document);
+
+                             beautified = XmlPrettifyHelper.Prettify(tracestep.Metadata.Replace(xmlHeader, ""));
+                            //beautified = string.Format("<pre><code>{0}</code></pre>", beautified);
+                            //beautified = ConvertXmlToHtml(tracestep.Metadata.Replace(xmlHeader, ""));
                         }
                         else if (IsValidJson(tracestep.Metadata))
                         {
-                            beautified = BeautifyJson(tracestep.Metadata);
+                            beautified = JsonPrettifier.BeautifyJson(tracestep.Metadata);
                         }
                         else beautified = tracestep.Metadata;
 
@@ -174,12 +177,8 @@ namespace TracingExperiment.Controllers
             return false;
         }
 
-        static public string BeautifyJson(string json)
-        {
-            string jsonFormatted = JToken.Parse(json).ToString(Formatting.Indented);
-            return jsonFormatted;
-        }
-
+        
+        
         static public string Beautify(XmlDocument doc)
         {
             StringBuilder sb = new StringBuilder();
@@ -209,7 +208,7 @@ namespace TracingExperiment.Controllers
 
             sbString = newStringBuilder.ToString();
 
-            return sbString;
+            return string.Format("<pre><code>{0}</code></pre>", sbString);
         }
 
         private static XmlElement GetElement(string xml)

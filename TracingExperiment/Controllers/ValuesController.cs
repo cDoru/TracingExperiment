@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Xml;
 using TracingExperiment.IOC.Interfaces;
 using TracingExperiment.MathService;
+using TracingExperiment.Tracing.Interfaces;
 using TracingExperiment.Tracing.Utils;
 
 namespace TracingExperiment.Controllers
@@ -30,7 +31,8 @@ namespace TracingExperiment.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            using (var traceStepper = TraceStepUtil.Get())
+            var traceStepper = _resolver.Resolve<ITraceStepper>();
+            using (traceStepper)
             {
                 traceStepper.WriteMessage(string.Format("Entered controller method with id = {0}", id));
                 traceStepper.WriteMessage("Calling wcf service");
@@ -96,8 +98,6 @@ namespace TracingExperiment.Controllers
 
                 },
             };
-
-
 
             var myReaderQuotas1 = new XmlDictionaryReaderQuotas
             {

@@ -6,9 +6,15 @@ using TracingExperiment.Tracing.Interfaces;
 
 namespace TracingExperiment.Tracing.Utils
 {
-    public static class TraceStepUtil
+    public interface ITraceStepUtil
     {
-        public static ITraceStepper Get()
+        ITraceStepper Get();
+    }
+
+
+    public class TraceStepUtil : ITraceStepUtil
+    {
+        public ITraceStepper Get()
         {
             var container = FetchContainer();
 
