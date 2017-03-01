@@ -122,7 +122,12 @@ namespace TracingExperiment.Tracing.Concurrent
 
         public void Clear()
         {
-            _steps = new ConcurrentList<TraceStep>();
+            using (new TimingOutLock(_thisLock))
+            {
+                _steps = new ConcurrentList<TraceStep>();
+                _index = new AtomicInteger(0);
+                _index.Increment();
+            }
         }
     }
 }
