@@ -4,8 +4,10 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TracingExperiment.Models;
@@ -36,7 +38,8 @@ namespace TracingExperiment.Controllers
 
         public JsonResult GetTracesPaged(int offset, int limit, string search, string sort, string order)
         {
-            const string xmlHeader = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+            const string xmlHeader8 = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+            const string xmlHeader16 = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 
             const string ascending = "asc";
             const string descending = "desc";
@@ -101,11 +104,11 @@ namespace TracingExperiment.Controllers
 
                         string beautified;
 
-                        if (tracestep.Metadata.StartsWith(xmlHeader))
+                        if (IsValidXml(tracestep.Metadata))
                         {
                             // xml 
                             // operation metadata is xml in our case
-                             beautified = XmlPrettifyHelper.Prettify(tracestep.Metadata.Replace(xmlHeader, ""));
+                             beautified = XmlPrettifyHelper.Prettify(tracestep.Metadata.Replace(xmlHeader8, "").Replace(xmlHeader16, ""));
                         }
                         else if (IsValidJson(tracestep.Metadata))
                         {
@@ -142,6 +145,28 @@ namespace TracingExperiment.Controllers
             };
 
             return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        private static bool IsValidXml(string xmlString)
+        {
+            var tagsWithData = new Regex("<\\w+>[^<]+</\\w+>");
+
+            //Light checking
+            if (string.IsNullOrEmpty(xmlString) || tagsWithData.IsMatch(xmlString) == false)
+            {
+                return false;
+            }
+
+            try
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.LoadXml(xmlString);
+                return true;
+            }
+            catch (Exception e1)
+            {
+                return false;
+            }
         }
 
         private static bool IsValidJson(string strInput)
