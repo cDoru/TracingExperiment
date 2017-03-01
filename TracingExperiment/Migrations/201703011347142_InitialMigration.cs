@@ -32,18 +32,18 @@ namespace TracingExperiment.Tracing.Database
                         Frame = c.String(maxLength: 1000),
                         Metadata = c.String(storeType: "ntext"),
                         Message = c.String(maxLength: 1000),
-                        StepId = c.Guid(nullable: false),
+                        LogEntryId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.LogEntries", t => t.StepId, cascadeDelete: true)
-                .Index(t => t.StepId);
+                .ForeignKey("dbo.LogEntries", t => t.LogEntryId, cascadeDelete: true)
+                .Index(t => t.LogEntryId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.LogSteps", "StepId", "dbo.LogEntries");
-            DropIndex("dbo.LogSteps", new[] { "StepId" });
+            DropForeignKey("dbo.LogSteps", "LogEntryId", "dbo.LogEntries");
+            DropIndex("dbo.LogSteps", new[] { "LogEntryId" });
             DropTable("dbo.LogSteps");
             DropTable("dbo.LogEntries");
         }

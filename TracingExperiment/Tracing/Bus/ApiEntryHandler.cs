@@ -41,6 +41,7 @@ namespace TracingExperiment.Tracing.Bus
                 {
                     Id = Guid.NewGuid(),
                     LogEntry = logEntry,
+                    LogEntryId = logEntry.Id,
                     Index = step.Index,
                     Metadata = step.Metadata,
                     StepTimestamp = step.StepTimestamp,

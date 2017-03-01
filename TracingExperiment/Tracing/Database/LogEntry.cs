@@ -6,15 +6,15 @@ namespace TracingExperiment.Tracing.Database
 {
     public class LogEntry : IEntity
     {
-        public virtual Guid Id { get; set; }
+        public Guid Id { get; set; }
 
-        public virtual DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
-        public virtual DateTime? RequestTimestamp { get; set; }
+        public DateTime? RequestTimestamp { get; set; }
 
-        public virtual DateTime? ResponseTimestamp { get; set; }
+        public DateTime? ResponseTimestamp { get; set; }
 
-        public virtual string RequestUri { get; set; }
+        public string RequestUri { get; set; }
 
         public virtual ICollection<LogStep> Steps { get; set; } 
     }

@@ -10,6 +10,7 @@ namespace TracingExperiment.Tracing.Interfaces
 
         void WriteOperation(string source, string frame, 
             string description, string name, string operationMetadata);
-        List<TraceStep> TraceSteps { get; } 
+        List<TraceStep> TraceSteps { get; }
+        void Clear();
     }
 }

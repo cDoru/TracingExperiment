@@ -13,7 +13,7 @@ namespace TracingExperiment.Tracing.Concurrent
         private readonly INow _now;
         private readonly IHelper _helper;
         private readonly object _thisLock = new Object();
-        private readonly ConcurrentList<TraceStep> _steps;
+        private ConcurrentList<TraceStep> _steps;
         private AtomicInteger _index;
 
         public SimpleTracer(INow now, IHelper helper)
@@ -109,12 +109,20 @@ namespace TracingExperiment.Tracing.Concurrent
             }
         }
 
+        
+
         public List<TraceStep> TraceSteps
         {
             get
             {
-                return !_helper.ShouldLog ? new List<TraceStep>() : _steps.OrderBy(x => x.Index).ToList();
+                var steps = !_helper.ShouldLog ? new List<TraceStep>() : _steps.OrderBy(x => x.Index).ToList();
+                return steps;
             }
+        }
+
+        public void Clear()
+        {
+            _steps = new ConcurrentList<TraceStep>();
         }
     }
 }

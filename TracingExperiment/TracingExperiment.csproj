@@ -239,6 +239,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Migrations\201703011347142_InitialMigration.cs" />
+    <Compile Include="Migrations\201703011347142_InitialMigration.Designer.cs">
+      <DependentUpon>201703011347142_InitialMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\JsonPrettifier.cs" />
     <Compile Include="Resources\XmlPrettifyHelper.cs" />
     <Compile Include="Exceptions\ContainerNullException.cs" />
@@ -272,10 +276,6 @@
     <Compile Include="IOC\Interfaces\IResolver.cs" />
     <Compile Include="IOC\Resolver.cs" />
     <Compile Include="Keys.cs" />
-    <Compile Include="Migrations\201702270905227_InitialMigration.cs" />
-    <Compile Include="Migrations\201702270905227_InitialMigration.Designer.cs">
-      <DependentUpon>201702270905227_InitialMigration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -372,6 +372,9 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <EmbeddedResource Include="Migrations\201703011347142_InitialMigration.resx">
+      <DependentUpon>201703011347142_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\xml.xslt" />
     <EmbeddedResource Include="Resources\json.html" />
     <Content Include="Scripts\bootstrap-table\bootstrap-table.js" />
@@ -475,11 +478,6 @@
     <WCFMetadataStorage Include="Service References\MathService\" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702270905227_InitialMigration.resx">
-      <DependentUpon>201702270905227_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

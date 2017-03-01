@@ -83,7 +83,7 @@ namespace TracingExperiment.Controllers
 
             foreach (var trace in pagedTracesList)
             {
-                var traceSteps = trace.Steps.OrderBy(x => x.Index);
+                var traceSteps = trace.Steps.ToList();
 
                 StringBuilder builder = new StringBuilder();
                 builder.Append("<p style=\"white-space: nowrap;\">Start request </p>");

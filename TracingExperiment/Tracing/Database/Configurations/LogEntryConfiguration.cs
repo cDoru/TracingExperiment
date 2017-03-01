@@ -22,7 +22,7 @@ namespace TracingExperiment.Tracing.Database.Configurations
             Property(x => x.RequestTimestamp).HasColumnName("RequestTimestamp").HasColumnType("datetime").HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.ResponseTimestamp).HasColumnName("ResponseTimestamp").HasColumnType("datetime").HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(x => x.RequestUri).HasColumnName("RequestUri").HasColumnType("nvarchar").HasMaxLength(256).IsRequired().HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-            HasMany(x => x.Steps).WithRequired(x => x.LogEntry).Map(x => x.MapKey("StepId"));
+            HasMany(x => x.Steps).WithRequired(x => x.LogEntry).HasForeignKey(x => x.LogEntryId);
         }
     }
 }

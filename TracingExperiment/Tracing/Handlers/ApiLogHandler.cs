@@ -66,6 +66,7 @@ namespace TracingExperiment.Tracing.Handlers
                 _traceStepper.Dispose();
 
                 var traceSteps = _tracer.TraceSteps;
+                _tracer.Clear();
 
                 await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, traceSteps));
             }
