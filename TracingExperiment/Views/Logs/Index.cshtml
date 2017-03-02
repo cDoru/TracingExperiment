@@ -7,6 +7,8 @@
 @section styles
 {
     @Styles.Render("~/Content/xmldisplaycss")
+
+    @Styles.Render("~/Content/prettyprint")
 }
 
 <div class="jumbotron">
@@ -21,3 +23,20 @@
       .Apply(m => m.Timestamp, ColumnOption.sortable)
       .ApplyToColumns(ColumnOption.formatter)
       .Apply(TableOption.buttonsAlign, "left"))
+
+@section scripts
+{   
+    @Scripts.Render("~/bundles/prettyprintjs")
+    <script language="javascript">
+        $(document).ready(function() {
+
+            $('.bootstrap-table').on('load-success.bs.table', function () {
+                PR.prettyPrint();
+            });
+
+            $("button[name='toggle']").click(function () {
+                PR.prettyPrint();
+            });
+        })
+    </script>
+}

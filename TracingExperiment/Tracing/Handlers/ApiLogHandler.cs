@@ -32,44 +32,42 @@ namespace TracingExperiment.Tracing.Handlers
 
         private void ProcessRequest(Task<string> task, ApiLogEntry apiLogEntry )
         {
-            if (_helper.ShouldLog)
-            {
-                apiLogEntry.RequestContentBody = task.Result;
-                _traceStepper.WriteOperation("Web API request", "request headers", apiLogEntry.RequestHeaders);
-                _traceStepper.WriteOperation("Web API request", "query string", apiLogEntry.RequestUri);
-                _traceStepper.WriteOperation("Web API request", "body request", apiLogEntry.RequestContentBody);
-            }
+            if (!_helper.ShouldLog) return;
+            
+            apiLogEntry.RequestContentBody = task.Result;
+            _traceStepper.WriteOperation("Web API request", "request headers", apiLogEntry.RequestHeaders);
+            _traceStepper.WriteOperation("Web API request", "query string", apiLogEntry.RequestUri);
+            _traceStepper.WriteOperation("Web API request", "body request", apiLogEntry.RequestContentBody);
         }
 
         private async Task<HttpResponseMessage> ProcessResponse(Task<HttpResponseMessage> task, ApiLogEntry apiLogEntry)
         {
             var response = task.Result;
 
-            if (_helper.ShouldLog)
+            if (!_helper.ShouldLog) return response;
+            
+            // Update the API log entry with response info
+            apiLogEntry.ResponseStatusCode = (int)response.StatusCode;
+            apiLogEntry.ResponseTimestamp = DateTime.Now;
+
+            if (response.Content != null)
             {
-                // Update the API log entry with response info
-                apiLogEntry.ResponseStatusCode = (int)response.StatusCode;
-                apiLogEntry.ResponseTimestamp = DateTime.Now;
-
-                if (response.Content != null)
-                {
-                    apiLogEntry.ResponseContentBody = response.Content.ReadAsStringAsync().Result;
-                    apiLogEntry.ResponseContentType = response.Content.Headers.ContentType.MediaType;
-                    apiLogEntry.ResponseHeaders = SerializeHeaders(response.Content.Headers);
-                }
-
-                // TODO: Save the API log entry to the database
-
-                _traceStepper.WriteOperation("Web API response", "response body", apiLogEntry.ResponseContentBody);
-                _traceStepper.WriteOperation("Web API response", "response headers", apiLogEntry.ResponseHeaders);
-
-                _traceStepper.Dispose();
-
-                var traceSteps = _tracer.TraceSteps;
-                _tracer.Clear();
-
-                await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, traceSteps));
+                apiLogEntry.ResponseContentBody = response.Content.ReadAsStringAsync().Result;
+                apiLogEntry.ResponseContentType = response.Content.Headers.ContentType.MediaType;
+                apiLogEntry.ResponseHeaders = SerializeHeaders(response.Content.Headers);
             }
+
+            // TODO: Save the API log entry to the database
+
+            _traceStepper.WriteOperation("Web API response", "response body", apiLogEntry.ResponseContentBody);
+            _traceStepper.WriteOperation("Web API response", "response headers", apiLogEntry.ResponseHeaders);
+
+            _traceStepper.Dispose();
+
+            var traceSteps = _tracer.TraceSteps;
+            _tracer.Clear();
+
+            await _bus.SendAsync(new ApiEntryCommand(apiLogEntry, traceSteps));
 
             return response;
         }

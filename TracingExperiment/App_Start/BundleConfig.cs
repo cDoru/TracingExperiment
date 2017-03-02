@@ -19,12 +19,15 @@ namespace TracingExperiment
                       "~/scripts/bootstrap-table/bootstrap-table.min.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/prettyprintjs").Include("~/Scripts/prettify.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-table.min.css",
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/xmldisplaycss").Include("~/Content/xml.css"));
+            bundles.Add(new StyleBundle("~/Content/prettyprint").Include("~/Content/prettify.css"));
         }
     }
 }

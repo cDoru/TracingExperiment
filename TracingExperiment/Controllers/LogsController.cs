@@ -94,7 +94,7 @@ namespace TracingExperiment.Controllers
                 foreach (var tracestep in traceSteps)
                 {
                     builder.Append(string.Format("<p style=\"white-space: nowrap;\">{0}</p>", string.Format("From {0} method located in frame {1} {2} {3} \r\n", tracestep.Source,
-                        tracestep.Frame,
+                        string.Format("<pre class=\"prettyprint lang-cs\">{0}</pre>", tracestep.Frame),
                         (!string.IsNullOrEmpty(tracestep.Name) ? string.Format(" (which processes {0}) ", tracestep.Name) : ""),
                         (!string.IsNullOrEmpty(tracestep.Message) ? string.Format(" (with message {0}) ", tracestep.Message) : ""))));
 
