@@ -112,7 +112,7 @@ namespace TracingExperiment.Controllers
                         }
                         else if (IsValidJson(tracestep.Metadata))
                         {
-                            beautified = JsonPrettifier.BeautifyJson(tracestep.Metadata);
+                            beautified = string.Format("<pre class=\"prettyprint lang-json\">{0}</pre>", JsonPrettifier.BeautifyJson(tracestep.Metadata));
                         }
                         else beautified = tracestep.Metadata;
 

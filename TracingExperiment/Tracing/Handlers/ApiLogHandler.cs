@@ -35,6 +35,12 @@ namespace TracingExperiment.Tracing.Handlers
             if (!_helper.ShouldLog) return;
             
             apiLogEntry.RequestContentBody = task.Result;
+
+            if (string.IsNullOrEmpty(apiLogEntry.RequestContentBody))
+            {
+                apiLogEntry.RequestContentBody = "No body payload detected";
+            }
+
             _traceStepper.WriteOperation("Web API request", "request headers", apiLogEntry.RequestHeaders);
             _traceStepper.WriteOperation("Web API request", "query string", apiLogEntry.RequestUri);
             _traceStepper.WriteOperation("Web API request", "body request", apiLogEntry.RequestContentBody);
