@@ -322,10 +322,13 @@
     <Compile Include="Tracing\Interfaces\ITraceStepper.cs" />
     <Compile Include="Tracing\Utils\AsyncHelper.cs" />
     <Compile Include="Tracing\Utils\Interfaces\INow.cs" />
+    <Compile Include="Tracing\Utils\JsonUtils.cs" />
     <Compile Include="Tracing\Utils\NowImplementation.cs" />
+    <Compile Include="Tracing\Utils\SortUtils.cs" />
     <Compile Include="Tracing\Utils\StackTraceParser.cs" />
     <Compile Include="Tracing\Utils\TimingOutLock.cs" />
     <Compile Include="Tracing\Utils\TraceStepUtil.cs" />
+    <Compile Include="Tracing\Utils\XmlUtils.cs" />
     <Compile Include="Tracing\WCF\TracingMessageBehavior.cs" />
     <Compile Include="Tracing\WCF\TracingMessageBehaviorElement.cs" />
     <Compile Include="Tracing\WCF\TracingMessageDispatcher.cs" />

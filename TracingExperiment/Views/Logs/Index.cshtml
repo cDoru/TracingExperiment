@@ -16,10 +16,11 @@
 </div>
 
 @(Html.BootstrapTable<TraceViewModel>(Url.Action("GetTracesPaged"), TablePaginationOption.server)
-      .Apply(TableOption.showLoading, TableOption.showRefresh, TableOption.search, TableOption.sortOrder_desc, TableOption.striped, TableOption.showToggle)
+      .Apply(TableOption.showLoading, TableOption.showRefresh, TableOption.search, 
+          TableOption.sortOrder_desc, TableOption.striped, TableOption.showToggle, TableOption.cardView, TableOption.ajaxOptions, TableOption.sortable, 
+          TableOption.showHeader, TableOption.showPaginationSwitch)
       .Apply(TableOption.sortName, "Timestamp")
-      .Apply(TableOption.pageSize, 100)
-      .Cease(x => x.Workflow)
+      .Apply(TableOption.pageSize, 4)
       .Apply(m => m.Timestamp, ColumnOption.sortable)
       .ApplyToColumns(ColumnOption.formatter)
       .Apply(TableOption.buttonsAlign, "left"))

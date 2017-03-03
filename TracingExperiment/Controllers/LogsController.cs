@@ -1,26 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TracingExperiment.Models;
 using TracingExperiment.Resources;
 using TracingExperiment.Tracing.Database;
 using TracingExperiment.Tracing.Database.Interfaces;
+using TracingExperiment.Tracing.Utils;
 using TracingExperiment.Tracing.Utils.Interfaces;
 
 namespace TracingExperiment.Controllers
 {
     public class LogsController : Controller
     {
+        const string XmlHeader8 = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+        const string XmlHeader16 = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+
+        const string LogsSortAscendingKey = "asc";
+        const string LogsSortDescendingKey = "desc";
+
         private const int LogLimit = 2*24; // 2 days
+
         private readonly ITracingContext _context;
         private readonly INow _now;
 
@@ -35,16 +38,11 @@ namespace TracingExperiment.Controllers
             return View();
         }
 
-
+        
+       
         public JsonResult GetTracesPaged(int offset, int limit, string search, string sort, string order)
         {
-            const string xmlHeader8 = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-            const string xmlHeader16 = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-
-            const string ascending = "asc";
-            const string descending = "desc";
             // get logs newer than 7 days
-
             var nowUtc = _now.UtcNow;
 
             var traces =
@@ -53,17 +51,18 @@ namespace TracingExperiment.Controllers
                     .AsQueryable();
 
             IOrderedQueryable<LogEntry> pagedTraces;
-            if (order == ascending)
+
+            switch (order)
             {
-                pagedTraces = traces.OrderBy(x => x.Timestamp);
-            }
-            else if (order == descending)
-            {
-                pagedTraces = traces.OrderByDescending(x => x.Timestamp);
-            }
-            else
-            {
-                pagedTraces = traces.OrderByDescending(x => x.Timestamp);
+                case LogsSortAscendingKey:
+                    pagedTraces = traces.OrderAscending(sort);
+                    break;
+                case LogsSortDescendingKey:
+                    pagedTraces = traces.OrderDescending(sort);
+                    break;
+                default:
+                    pagedTraces = traces.OrderDescending(sort);
+                    break;
             }
 
             List<LogEntry> pagedTracesList;
@@ -77,18 +76,21 @@ namespace TracingExperiment.Controllers
             else
             {
                 pagedTracesList = pagedTraces.Where(x => x.RequestUri.Contains(search)
-                                                         || x.Steps.Any(y => y.Metadata != null && y.Metadata.Contains(search)))
+                                                         || x.Steps.Any(y => (y.Metadata != null && y.Metadata.Contains(search)) || 
+                                                                              (y.Frame != null && y.Frame.Contains(search)) || 
+                                                                              (y.Message != null && y.Message.Contains(search)) || 
+                                                                              (y.Name != null && y.Name.Contains(search))))
                 .Skip((offset / limit) * limit)
                 .Take(limit).ToList();
             }
 
-            List<TraceViewModel> tracesVms = new List<TraceViewModel>();
+            var tracesVms = new List<TraceViewModel>();
 
             foreach (var trace in pagedTracesList)
             {
                 var traceSteps = trace.Steps.OrderBy(x => x.Index).ToList();
-
-                StringBuilder builder = new StringBuilder();
+                
+                var builder = new StringBuilder();
                 builder.Append("<p style=\"white-space: nowrap;\">Start request </p>");
 
                 foreach (var tracestep in traceSteps)
@@ -98,38 +100,41 @@ namespace TracingExperiment.Controllers
                         (!string.IsNullOrEmpty(tracestep.Name) ? string.Format(" (which processes {0}) ", tracestep.Name) : ""),
                         (!string.IsNullOrEmpty(tracestep.Message) ? string.Format(" (with message {0}) ", tracestep.Message) : ""))));
 
-                    if (!string.IsNullOrEmpty(tracestep.Metadata))
+                    if (string.IsNullOrEmpty(tracestep.Metadata)) continue;
+                    
+                    builder.Append("<p style=\"white-space: nowrap;\">With metadata: </p>");
+
+                    string beautified;
+                    if (XmlUtils.IsValidXml(tracestep.Metadata))
                     {
-                        builder.Append("<p style=\"white-space: nowrap;\">With metadata: </p>");
-
-                        string beautified;
-
-                        if (IsValidXml(tracestep.Metadata))
-                        {
-                            // xml 
-                            // operation metadata is xml in our case
-                             beautified = XmlPrettifyHelper.Prettify(tracestep.Metadata.Replace(xmlHeader8, "").Replace(xmlHeader16, ""));
-                        }
-                        else if (IsValidJson(tracestep.Metadata))
-                        {
-                            beautified = string.Format("<pre class=\"prettyprint lang-json\">{0}</pre>", JsonPrettifier.BeautifyJson(tracestep.Metadata));
-                        }
-                        else beautified = tracestep.Metadata;
-
-                        builder.Append(beautified);
+                        // xml 
+                        // operation metadata is xml in our case
+                        beautified = XmlPrettifyHelper.Prettify(tracestep.Metadata.Replace(XmlHeader8, "").Replace(XmlHeader16, ""));
+                    }
+                    else if (JsonUtils.IsValidJson(tracestep.Metadata))
+                    {
+                        beautified = string.Format("<pre class=\"prettyprint lang-json\">{0}</pre>",
+                            JsonPrettifier.BeautifyJson(tracestep.Metadata));
+                    }
+                    else
+                    {
+                        beautified = tracestep.Metadata;
                     }
 
+                    builder.Append(beautified);
                 }
 
                 builder.Append("<p style=\"white-space: nowrap;\">End request </p>");
 
                 var traceString = HttpUtility.HtmlEncode(builder.ToString());
 
+                var captureDuration = trace.ResponseTimestamp.HasValue && trace.RequestTimestamp.HasValue;
+
                 var item = new TraceViewModel
                 {
-                    Duration =
-                        string.Format("{0} seconds",
-                            (trace.ResponseTimestamp.Value - trace.RequestTimestamp.Value).TotalSeconds.ToString("#.##")),
+
+                    Duration = captureDuration ? string.Format("{0} seconds",
+                            (trace.ResponseTimestamp.Value - trace.RequestTimestamp.Value).TotalSeconds.ToString("#.##")) : "Duration not captured",
                     Timestamp = trace.Timestamp.ToString(CultureInfo.InvariantCulture),
                     Uri = trace.RequestUri,
                     Workflow = new HtmlString(HttpUtility.HtmlDecode(traceString)).ToHtmlString()
@@ -145,53 +150,6 @@ namespace TracingExperiment.Controllers
             };
 
             return Json(model, JsonRequestBehavior.AllowGet);
-        }
-
-        private static bool IsValidXml(string xmlString)
-        {
-            var tagsWithData = new Regex("<\\w+>[^<]+</\\w+>");
-
-            //Light checking
-            if (string.IsNullOrEmpty(xmlString) || tagsWithData.IsMatch(xmlString) == false)
-            {
-                return false;
-            }
-
-            try
-            {
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.LoadXml(xmlString);
-                return true;
-            }
-            catch (Exception e1)
-            {
-                return false;
-            }
-        }
-
-        private static bool IsValidJson(string strInput)
-        {
-            strInput = strInput.Trim();
-            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
-                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
-            {
-                try
-                {
-                    JToken.Parse(strInput);
-                    return true;
-                }
-                catch (JsonReaderException jex)
-                {
-                    //Exception in parsing json
-                    Console.WriteLine(jex.Message);
-                    return false;
-                }
-                catch (Exception ex) //some other exception
-                {
-                    return false;
-                }
-            }
-            return false;
         }
     }
 }
