@@ -67,6 +67,10 @@
       <HintPath>..\packages\Enexure.MicroBus.MessageContracts.3.1.0\lib\net45\Enexure.MicroBus.MessageContracts.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="LinqKit.Core, Version=1.1.8.0, Culture=neutral, PublicKeyToken=bc217f8844052a91, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqKit.Core.1.1.8.0\lib\net461\LinqKit.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="ProductionStackTrace, Version=1.0.16.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ProductionStackTrace.1.0.16\lib\net45\ProductionStackTrace.dll</HintPath>

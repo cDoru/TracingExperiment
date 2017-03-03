@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using LinqKit;
+using Microsoft.Ajax.Utilities;
 using TracingExperiment.Models;
 using TracingExperiment.Resources;
 using TracingExperiment.Tracing.Database;
@@ -38,6 +44,10 @@ namespace TracingExperiment.Controllers
             return View();
         }
 
+        bool IsMatch(string s, Regex r)
+        {
+            return !s.IsNullOrWhiteSpace() && r.IsMatch(s);
+        }
         
        
         public JsonResult GetTracesPaged(int offset, int limit, string search, string sort, string order)
@@ -75,13 +85,15 @@ namespace TracingExperiment.Controllers
             }
             else
             {
-                pagedTracesList = pagedTraces.Where(x => x.RequestUri.Contains(search)
-                                                         || x.Steps.Any(y => (y.Metadata != null && y.Metadata.Contains(search)) || 
-                                                                              (y.Frame != null && y.Frame.Contains(search)) || 
-                                                                              (y.Message != null && y.Message.Contains(search)) || 
-                                                                              (y.Name != null && y.Name.Contains(search))))
-                .Skip((offset / limit) * limit)
-                .Take(limit).ToList();
+                string searchLikeExpression = string.Format("%{0}%", search);
+                Expression<Func<LogEntry, bool>> searchExpression =
+                    entry => SqlFunctions.PatIndex(searchLikeExpression, entry.RequestUri) > 0 ||
+                        entry.Steps.Any(x => SqlFunctions.PatIndex(searchLikeExpression, x.Frame) > 0 ||
+                                             SqlFunctions.PatIndex(searchLikeExpression, x.Message) > 0 ||
+                                             SqlFunctions.PatIndex(searchLikeExpression, x.Name) > 0 ||
+                                             SqlFunctions.PatIndex(searchLikeExpression, x.Metadata) > 0);
+
+                pagedTracesList = pagedTraces.AsExpandable().Where(searchExpression).Skip((offset / limit) * limit).Take(limit).ToList();
             }
 
             var tracesVms = new List<TraceViewModel>();
