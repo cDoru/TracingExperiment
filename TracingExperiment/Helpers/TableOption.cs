@@ -10,56 +10,56 @@ namespace TracingExperiment.Helpers
         /// </summary>
         /// <value>string = table</value>
         [ValueField(Name = "data-toggle", Value = "table")]
-        toggle,
+        Toggle,
 
         /// <summary>
         /// The class name of table (default = table table-hover).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-classes")]
-        classes,
+        Classes,
 
         /// <summary>
         /// The height of table.
         /// </summary>
         /// <value>int</value>
         [NameField(Name = "data-height")]
-        height,
+        Height,
 
         /// <summary>
         /// Defines the default undefined text.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-undefined-text")]
-        undefined,
+        Undefined,
 
         /// <summary>
         /// True to stripe the rows (default = false)
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-striped")]
-        striped,
+        Striped,
 
         /// <summary>
         /// Defines which column can be sorted.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-sort-name")]
-        sortName,
+        SortName,
 
         /// <summary>
         /// Defines the column sort order as assending.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-sort-order", Value = "asc")]
-        sortOrder_asc,
+        SortOrderAsc,
 
         /// <summary>
         /// Defines the column sort order as decending.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-sort-order", Value = "desc")]
-        sortOrder_desc,
+        SortOrderDesc,
 
         /// <summary>
         /// Defines icon set name.
@@ -67,7 +67,7 @@ namespace TracingExperiment.Helpers
         /// <value>string = 'glyphicon' (default) or 'fa' for FontAwesome</value>
         /// <remarks>1.6</remarks>
         [NameField(Name = "data-icons-prefix")]
-        iconsPrefix,
+        IconsPrefix,
 
         /// <summary>
         /// Defines icons that used for refresh, toggle and columns buttons.
@@ -79,49 +79,49 @@ namespace TracingExperiment.Helpers
         /// </example>
         /// <remarks>1.6</remarks>
         [NameField(Name = "data-icons")]
-        icons,
+        Icons,
 
         /// <summary>
         /// The table columns config object, see column properties for more details.
         /// </summary>
         /// <value>string[]</value>
         [NameField(Name = "")]
-        columns,
+        Columns,
 
         /// <summary>
         /// The method type to request remote data (default = get).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-method")]
-        method,
+        Method,
 
         /// <summary>
         /// A URL to request data from remote site.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-url")]
-        url,
+        Url,
 
         /// <summary>
         /// False to disable caching of AJAX requests (default = true).
         /// </summary>
         /// <value>boolean</value>
         [ValueField(Name = "data-cache")]
-        cache,
+        Cache,
 
         /// <summary>
         /// The contentType of request remote data (default = application/json).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-content-type")]
-        contentType,
+        ContentType,
 
         /// <summary>
         /// The type of data that you are expecting back from the server (default = json).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-data-type")]
-        dataType,
+        DataType,
 
         /// <summary>
         /// Additional options for submit ajax request. List of values: http://api.jquery.com/jQuery.ajax.
@@ -129,7 +129,7 @@ namespace TracingExperiment.Helpers
         /// <value>object[]</value>
         /// <remarks>1.6</remarks>
         [NameField(Name = "data-ajax-options")]
-        ajaxOptions,
+        AjaxOptions,
 
         /// <summary>
         /// When request remote data, sending additional parameters by format the queryParams,
@@ -138,14 +138,14 @@ namespace TracingExperiment.Helpers
         /// </summary>
         /// <value>string</value>
         [ValueField(Name = "data-query-params")]
-        queryParams,
+        QueryParams,
 
         /// <summary>
         /// Set "limit" to send query params width RESTFul type (default = limit).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-query-params-type")]
-        queryParamsType,
+        QueryParamsType,
 
         /// <summary>
         /// Before load remote data, handler the response data format, the parameters object 
@@ -153,63 +153,63 @@ namespace TracingExperiment.Helpers
         /// </summary>
         /// <value>string (function)</value>
         [NameField(Name = "data-response-handler")]
-        responseHandler,
+        ResponseHandler,
 
         /// <summary>
         /// True to show a pagination toolbar on table bottom (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-pagination")]
-        pagination,
+        Pagination,
 
         /// <summary>
         /// Defines the side pagination of table, can only be "client" or "server" (default = client).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-side-pagination")]
-        sidePagination,
+        SidePagination,
 
         /// <summary>
         /// When set pagination property, initialize the page number (default = 1).
         /// </summary>
         /// <value>int</value>
         [NameField(Name = "data-page-number")]
-        pageNumber,
+        PageNumber,
 
         /// <summary>
         /// When set pagination property, initialize the page size (default = 10).
         /// </summary>
         /// <value>int</value>
         [NameField(Name = "data-page-size")]
-        pageSize,
+        PageSize,
 
         /// <summary>
         /// When set pagination property, initialize the page size selecting list (default = [10, 25, 50, 100]).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-page-list")]
-        pageList,
+        PageList,
 
         /// <summary>
         /// The name of radio or checkbox input (default = btSelectItem).
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-select-item-name")]
-        selectItemName,
+        SelectItemName,
 
         /// <summary>
         /// True to display pagination or card view smartly.
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-smart-display")]
-        smartDisplay,
+        SmartDisplay,
 
         /// <summary>
         /// Enable the search input (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-search")]
-        search,
+        Search,
 
         /// <summary>
         /// Set timeout for search fire.
@@ -217,70 +217,70 @@ namespace TracingExperiment.Helpers
         /// <value>int (default = 500)</value>
         /// <remarks>1.6</remarks>
         [NameField(Name = "data-search-time-out")]
-        searchTimeOut,
+        SearchTimeOut,
 
         /// <summary>
         /// False to hide the table header (default = true)
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-show-header")]
-        showHeader,
+        ShowHeader,
 
         /// <summary>
         /// True to show the columns drop down list (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-show-columns")]
-        showColumns,
+        ShowColumns,
 
         /// <summary>
         /// True to show the refresh button (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-show-refresh")]
-        showRefresh,
+        ShowRefresh,
 
         /// <summary>
         /// True to show the toggle button to toggle table / card view (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-show-toggle")]
-        showToggle,
+        ShowToggle,
 
         /// <summary>
         /// The minimum count columns to hide of the columns drop down list (default = 1).
         /// </summary>
         /// <value>int</value>
         [NameField(Name = "data-minimum-count-columns")]
-        minimumCountColumns,
+        MinimumCountColumns,
 
         /// <summary>
         /// Indicate which field is an identity field.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-id-field")]
-        idField,
+        IdField,
 
         /// <summary>
         /// True to show card view table, for example mobile view (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-card-view")]
-        cardView,
+        CardView,
 
         /// <summary>
         /// Indicate how to align the search input (default = right).
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-search-align", Value = "left")]
-        searchAlign_left,
+        SearchAlignLeft,
 
         /// <summary>
         /// Indicate how to align the search input (default = right).
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-search-align", Value = "right")]
-        searchAlign_right,
+        SearchAlignRight,
 
         /// <summary>
         /// Indicate how to align the toolbar buttons (default = right).
@@ -288,63 +288,63 @@ namespace TracingExperiment.Helpers
         /// <value>string = 'left', 'right'</value>
         /// <remarks>1.6.0</remarks>
         [NameField(Name = "data-buttons-align")]
-        buttonsAlign,
+        ButtonsAlign,
 
         /// <summary>
         /// Indicate how to align the toolbar buttons on the left.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-toolbar-align", Value = "left")]
-        toolbarAlign_left,
+        ToolbarAlignLeft,
 
         /// <summary>
         /// Indicate how to align the toolbar buttons on the right.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-toolbar-align", Value = "right")]
-        toolbarAlign_right,
+        ToolbarAlignRight,
 
         /// <summary>
         /// True to select checkbox or radiobox when click rows (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-click-to-select")]
-        clickToSelect,
+        ClickToSelect,
 
         /// <summary>
         /// True to allow checkbox selecting only one row (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-single-select")]
-        singleSelect,
+        SingleSelect,
 
         /// <summary>
         /// jQuery selector that indicate the toolbar, for example: #toolbar, .toolbar.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-toolbar")]
-        toolbar,
+        Toolbar,
 
         /// <summary>
         /// False to hide check-all checkbox in header row (default = true).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-checkbox-header")]
-        checkboxHeader,
+        CheckboxHeader,
 
         /// <summary>
         /// True to maintain selected rows on change page and search (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-maintain-selected")]
-        maintainSelected,
+        MaintainSelected,
 
         /// <summary>
         /// False to disable sortable of all columns (default = true).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-sortable")]
-        sortable,
+        Sortable,
 
         /// <summary>
         /// The row style formatter function, take two parameters: row: the row record data. 
@@ -352,7 +352,7 @@ namespace TracingExperiment.Helpers
         /// </summary>
         /// <value>string (function)</value>
         [NameField(Name = "data-row-style")]
-        rowStyle,
+        RowStyle,
 
         /// <summary>
         /// Support all custom attributes.
@@ -360,7 +360,7 @@ namespace TracingExperiment.Helpers
         /// <value>Function	{} (parameters - row: the row record data, index: the row index)</value>
         /// <remarks>1.4.0</remarks>
         [NameField(Name = "data-row-attributes")]
-        rowAttributes,
+        RowAttributes,
 
         /// <summary>
         /// Set the icons size.
@@ -368,19 +368,19 @@ namespace TracingExperiment.Helpers
         /// <value>?</value>
         /// <remarks>1.6.0</remarks>
         [NameField(Name = "data-icon-size")]
-        iconSize,
+        IconSize,
 
         /// <summary>
         /// Toolbar button to show or hide the pagination.
         /// </summary>
         /// <remarks>1.6.0</remarks>
         [NameField(Name = "data-show-pagination-switch")]
-        showPaginationSwitch,
+        ShowPaginationSwitch,
 
         /// <summary>
         /// Show loading message when table is obtaining data.
         /// </summary>
         [NameField(Name = "data-show-loading")]
-        showLoading,
+        ShowLoading,
     }
 }

@@ -25,7 +25,7 @@ namespace TracingExperiment.Helpers.Controls
         /// <exclude/>
         public ITableBuilder Apply(TableOption option, object[] value)
         {
-            if (option.GetType() == typeof(TableOption) && option == TableOption.columns)
+            if (option.GetType() == typeof(TableOption) && option == TableOption.Columns)
                 return Columns(value.Select(o => o.ToString()).ToArray());
             else
                 return ApplyToTable(option.FieldName(), string.Format("[{0}]", string.Join(",", value)));

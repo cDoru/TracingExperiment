@@ -7,12 +7,12 @@
     {
         /// <summary></summary>
         [ValueField(Name = "data-side-pagination", Value = "")]
-        none,
+        None,
         /// <summary></summary>
         [ValueField(Name = "data-side-pagination", Value = "client")]
-        client,
+        Client,
         /// <summary></summary>
         [ValueField(Name = "data-side-pagination", Value = "server")]
-        server,
+        Server,
     }
 }

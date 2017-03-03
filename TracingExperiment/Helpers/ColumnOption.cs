@@ -10,56 +10,56 @@
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-radio")]
-        radio,
+        Radio,
 
         /// <summary>
         /// True to show a checkbox. The checkbox column has fixed width (defualt = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-checkbox")]
-        checkbox,
+        Checkbox,
 
         /// <summary>
         /// The column field name.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-field")]
-        field,
+        Field,
 
         /// <summary>
         /// The column title text.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-title")]
-        title,
+        Title,
 
         /// <summary>
         /// The column class name.
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-class")]
-        @class,
+        Class,
 
         /// <summary>
         /// Indicate how to align the column data.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-align", Value = "left")]
-        align_left,
+        AlignLeft,
 
         /// <summary>
         /// Indicate how to align the column data.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-align", Value = "right")]
-        align_right,
+        AlignRight,
 
         /// <summary>
         /// Indicate how to align the column data.
         /// </summary>
         /// <value>bool</value>        
         [ValueField(Name = "data-align", Value = "center")]
-        align_center,
+        AlignCenter,
 
         /// <summary>
         /// Indicate how to align the table header.
@@ -67,7 +67,7 @@
         /// <value>bool</value>
         /// <remarks>1.4.0</remarks>
         [ValueField(Name = "data-halign", Value = "left")]
-        halign_left,
+        HalignLeft,
 
         /// <summary>
         /// Indicate how to align the table header.
@@ -75,7 +75,7 @@
         /// <value>bool</value>
         /// <remarks>1.4.0</remarks>
         [ValueField(Name = "data-halign", Value = "right")]
-        halign_right,
+        HalignRight,
 
         /// <summary>
         /// Indicate how to align the table header.
@@ -83,70 +83,70 @@
         /// <value>bool</value>
         /// <remarks>1.4.0</remarks>
         [ValueField(Name = "data-halign", Value = "center")]
-        halign_center,
+        HalignCenter,
 
         /// <summary>
         /// Indicate how to align the cell data.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-valign", Value = "top")]
-        valign_top,
+        ValignTop,
 
         /// <summary>
         /// Indicate how to align the cell data.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-valign", Value = "middle")]
-        valign_middle,
+        ValignMiddle,
 
         /// <summary>
         /// Indicate how to align the cell data.
         /// </summary>
         /// <value>bool</value>
         [ValueField(Name = "data-valign", Value = "bottom")]
-        valign_bottom,
+        ValignBottom,
 
         /// <summary>
         /// The width of column. If not defined, the width will auto expand to fit its contents.
         /// </summary>
         /// <value>int</value>
         [NameField(Name = "data-width")]
-        width,
+        Width,
 
         /// <summary>
         /// True to allow the column can be sorted (default = false).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-sortable")]
-        sortable,
+        Sortable,
 
         /// <summary>
         /// The default sort order (default = asc).
         /// </summary>
         /// <value>string "asc" or "desc"</value>
         [NameField(Name = "data-order")]
-        order,
+        Order,
 
         /// <summary>
         /// False to hide the columns item (default = true)
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-visible")]
-        visible,
+        Visible,
 
         /// <summary>
         /// False to disable the switchable of columns item (default = true).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-switchable")]
-        switchable,
+        Switchable,
 
         /// <summary>
         /// True to select checkbox or radiobox when the column is clicked (default = true).
         /// </summary>
         /// <value>bool</value>
         [NameField(Name = "data-click-to-select")]
-        clickToSelect,
+        ClickToSelect,
 
         /// <summary>
         /// The cell formatter function, take three parameters: value: the field value. row: 
@@ -154,7 +154,7 @@
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-formatter")]
-        formatter,
+        Formatter,
 
         /// <summary>
         /// The cell events listener when you use formatter function, take three parameters: 
@@ -163,7 +163,7 @@
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-events")]
-        events,
+        Events,
 
         /// <summary>
         /// The custom field sort function that used to do local sorting, take two parameters:
@@ -171,7 +171,7 @@
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-sorter")]
-        sorter,
+        Sorter,
 
         /// <summary>
         /// The cell style formatter function, take three parameters: value: the field value.
@@ -179,7 +179,7 @@
         /// </summary>
         /// <value>string</value>
         [NameField(Name = "data-cell-style")]
-        cellStyle,
+        CellStyle,
 
         /// <summary>
         /// True to search data for this column.
@@ -187,6 +187,6 @@
         /// <value>bool</value>
         /// <remarks>1.5.0</remarks>
         [NameField(Name = "data-searchable")]
-        searchable,
+        Searchable,
     }
 }

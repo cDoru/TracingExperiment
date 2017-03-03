@@ -28,24 +28,24 @@ namespace TracingExperiment.Helpers.Controls
         #endregion
 
         /// <inheritDoc/>
-        public TableBuilder(string id = null, string url = null, TablePaginationOption? sidePagination = TablePaginationOption.none, object htmlAttributes = null)
+        public TableBuilder(string id = null, string url = null, TablePaginationOption? sidePagination = TablePaginationOption.None, object htmlAttributes = null)
         {
             _builder = new TagBuilder("table");
             if (!string.IsNullOrEmpty(id))
                 _builder.Attributes.Add("id", id);
 
-            if (sidePagination != TablePaginationOption.none)
+            if (sidePagination != TablePaginationOption.None)
             {
-                Apply(TableOption.pagination);
+                Apply(TableOption.Pagination);
                 ApplyToTable(sidePagination.FieldName(), sidePagination.FieldValue());
             }
 
             if (!string.IsNullOrEmpty(url))
-                Apply(TableOption.url, url);
+                Apply(TableOption.Url, url);
 
             _builder.MergeAttributes(htmlAttributes.HtmlAttributesToDictionary());
 
-            Apply(TableOption.toggle);
+            Apply(TableOption.Toggle);
         }
 
         /// <inheritDoc/>
@@ -79,11 +79,11 @@ namespace TracingExperiment.Helpers.Controls
             }
 
             var column = new TagBuilder("th");
-            column.Attributes.Add(ColumnOption.field.FieldName(), field);
+            column.Attributes.Add(ColumnOption.Field.FieldName(), field);
             if (sortable)
             {
-                column.Attributes.Add(ColumnOption.sortable.FieldName(), true.ToStringLower());
-                column.Attributes.Add(ColumnOption.sorter.FieldName(), sorter);
+                column.Attributes.Add(ColumnOption.Sortable.FieldName(), true.ToStringLower());
+                column.Attributes.Add(ColumnOption.Sorter.FieldName(), sorter);
             }
             column.InnerHtml = title;
             _columns.Add(column);

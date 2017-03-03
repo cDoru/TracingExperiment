@@ -13,7 +13,7 @@ namespace TracingExperiment.Helpers.Controls
     internal class TableBuilderT<TModel> : TableBuilder, IColumnBuilderT<TModel>
     {
         /// <exclude/>
-        public TableBuilderT(string id = null, string url = null, TablePaginationOption sidePagination = TablePaginationOption.none, 
+        public TableBuilderT(string id = null, string url = null, TablePaginationOption sidePagination = TablePaginationOption.None, 
             object htmlAttributes = null)
             : base(id, url, sidePagination, htmlAttributes)
         {

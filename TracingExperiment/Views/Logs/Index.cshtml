@@ -15,15 +15,15 @@
     <p class="lead">See the logs</p>
 </div>
 
-@(Html.BootstrapTable<TraceViewModel>(Url.Action("GetTracesPaged"), TablePaginationOption.server)
-      .Apply(TableOption.showLoading, TableOption.showRefresh, TableOption.search, 
-          TableOption.sortOrder_desc, TableOption.striped, TableOption.showToggle, TableOption.cardView, TableOption.ajaxOptions, TableOption.sortable, 
-          TableOption.showHeader, TableOption.showPaginationSwitch)
-      .Apply(TableOption.sortName, "Timestamp")
-      .Apply(TableOption.pageSize, 4)
-      .Apply(m => m.Timestamp, ColumnOption.sortable)
-      .ApplyToColumns(ColumnOption.formatter)
-      .Apply(TableOption.buttonsAlign, "left"))
+@(Html.BootstrapTable<TraceViewModel>(Url.Action("GetTracesPaged"), TablePaginationOption.Server)
+      .Apply(TableOption.ShowLoading, TableOption.ShowRefresh, TableOption.Search, 
+          TableOption.SortOrderDesc, TableOption.Striped, TableOption.ShowToggle, TableOption.CardView, TableOption.AjaxOptions, TableOption.Sortable, 
+          TableOption.ShowHeader, TableOption.ShowPaginationSwitch)
+      .Apply(TableOption.SortName, "Timestamp")
+      .Apply(TableOption.PageSize, 4)
+      .Apply(m => m.Timestamp, ColumnOption.Sortable)
+      .ApplyToColumns(ColumnOption.Formatter)
+      .Apply(TableOption.ButtonsAlign, "left"))
 
 @section scripts
 {   
